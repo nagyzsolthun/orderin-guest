@@ -25,6 +25,6 @@ describe('HeaderComponent', () => {
 
   it('should render the logo', async(() => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.logo').src).toContain('/assets/logo.svg');  // TODO this doesn't really test it
+    expect(compiled.querySelector('.logo').src).toContain('assets/logo.svg');  // TODO this doesn't really test it
   }));
 });
