@@ -1,0 +1,46 @@
+<svg version="1.1" baseProfile="full" width="220" height="220" xmlns="http://www.w3.org/2000/svg">
+    <!--
+        outer circle (cut 2x60 degrees)
+        x1|2 = xmid + cos(60)*r = 110 + (0.5 * 100)
+        y1 = ymid - sin(60)*r = 110 - (0.86602540378 * 100)
+        y2 = ymid + sin(60)*r = 110 + (0.86602540378 * 100)
+    -->
+    <path d="M 160 23.397459622
+             A 100 100 0 1 0 160 196.602540378"
+             stroke="white" stroke-width="15" fill="none" stroke-linecap="round"/>
+
+    <!--
+        outer curve (2x45 degrees)
+        x1|2 = xmid + cos(45)*r = 110 + (0.70710678118 * 100)
+        y1 = ymid - sin(45)*r = 110 - (0.70710678118 * 100)
+        y2 = ymid + sin(45)*r = 110 + (0.70710678118 * 100)
+    -->
+    <path d="M 180.710678118 39.289321882
+          A 100 100 0 0 1 180.710678118 180.710678118"
+          stroke="white" stroke-width="15" fill="none" stroke-linecap="round"/>
+
+    <!--
+        middle curve (2x45 degrees)
+        x1|2 = xmid + cos(45)*r = 110 + (0.70710678118 * 70)
+        y1 = ymid - sin(45)*r = 110 - (0.70710678118 * 70)
+        y2 = ymid + sin(45)*r = 110 + (0.70710678118 * 70)
+    -->
+    <path d="M 159.497474683 60.5025253174
+    A 70 70 0 0 1 159.497474683 159.497474683"
+    stroke="white" stroke-width="15" fill="none" stroke-linecap="round"/>
+
+    <!--
+        inner curve (2x45 degrees)
+        x1|2 = xmid + cos(45)*r = 110 + (0.70710678118 * 40)
+        y1 = ymid - sin(45)*r = 110 - (0.70710678118 * 40)
+        y2 = ymid + sin(45)*r = 110 + (0.70710678118 * 40)
+    -->
+    <path d="M 138.284271247 81.7157287528
+    A 40 40 0 0 1 138.284271247 138.284271247"
+    stroke="white" stroke-width="15" fill="none" stroke-linecap="round"/>
+
+    <!--
+        center point
+    -->
+    <circle cx="110" cy="110" r="10" stroke="white" stroke-width="15" fill="white" stroke-linecap="round"/>
+</svg>

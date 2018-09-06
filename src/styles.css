@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none;
+}
+html {
+    height: 100%;
+    background: url("assets/bg2-blur.jpg") no-repeat center top fixed;
+    background-size: 400%;  /* TODO hack */
+}
+body {
+    height: 100%;
+    font-family: sans-serif;
+    font-size: 24px;
+    overflow-y: scroll;
+    margin: 0;
+}
