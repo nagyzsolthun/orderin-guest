@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build --prod && node node_modules/gh-pages/bin/gh-pages.js -d dist/orderin-guest"
+    "deploy": "ng build --prod --base-href = /orderin-guest/ && node node_modules/gh-pages/bin/gh-pages.js -d dist/orderin-guest"
   },
   "private": true,
   "dependencies": {
