@@ -7,9 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  rootCategories: Array<string> = [];
 
   ngOnInit() {
+    // TODO subscribe on categories
   }
 
 }

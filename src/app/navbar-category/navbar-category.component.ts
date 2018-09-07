@@ -9,9 +9,12 @@ export class NavbarCategoryComponent implements OnInit {
 
   @Input() category: string;
 
-  constructor() { }
-
   ngOnInit() {
+    // TODO
+  }
+
+  select() {
+    // TODO
   }
 
 }
