@@ -1,0 +1,6 @@
+:host {
+    background-color: #26e;
+    overflow-x: scroll;
+    flex: none;
+    white-space: nowrap;
+}
