@@ -11,8 +11,7 @@ describe('NavbarQueryComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ NavbarQueryComponent ],
       providers: [ SearchService ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -21,16 +20,13 @@ describe('NavbarQueryComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should update if SearchService updates', () => {
+    const compiled = fixture.debugElement.nativeElement;
     const searchService: SearchService = TestBed.get(SearchService);
+
     searchService.update("testQuery");
     fixture.detectChanges();
 
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.innerHTML).toContain("testQuery");
+    expect(compiled.textContent).toContain("testQuery");
   });
 });

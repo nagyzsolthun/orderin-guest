@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,8 +10,10 @@ export class NavbarComponent implements OnInit {
 
   rootCategories: Array<string> = [];
 
+  constructor(private dataService: DataService) { }
+
   ngOnInit() {
-    // TODO subscribe on categories
+    this.dataService.rootCategories().subscribe(rootCategories => this.rootCategories = rootCategories);
   }
 
 }
