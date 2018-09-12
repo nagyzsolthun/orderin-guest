@@ -4,19 +4,19 @@ import { DataService } from './data.service';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { RouteService } from './route.service';
 
-class MockRoute {
-  firstChild = {
-    params: new BehaviorSubject<any>({tableId: "tableId"})
-  }
-}
-class MockRouter {
-  events = new BehaviorSubject<NavigationEnd>(null);
-}
 class MockHttpCLient {
   dataObservable = new BehaviorSubject<any>(null);
   get(url, options) {
     return this.dataObservable;
+  }
+}
+
+class MockRouteService {
+  tableIdObservable = new BehaviorSubject<string>(null);
+  tableId() {
+    return this.tableIdObservable;
   }
 }
 
@@ -26,9 +26,8 @@ describe('DataService', () => {
     TestBed.configureTestingModule({
       providers: [
         DataService,
-        { provide: Router, useClass: MockRouter },
-        { provide: ActivatedRoute, useClass: MockRoute },
         { provide: HttpClient, useClass: MockHttpCLient },
+        { provide: RouteService, useClass: MockRouteService },
       ]
     });
   });

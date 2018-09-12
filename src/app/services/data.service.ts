@@ -4,6 +4,7 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, first, filter } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { RouteService } from './route.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +16,12 @@ export class DataService {
 
   constructor(
     private http: HttpClient,
-    private router: Router,
-    private route: ActivatedRoute) {
+    private routeService: RouteService) {
 
-    // subscribe on tableId routeParam
-    // based on https://stackoverflow.com/questions/40219790/angular-2-get-routeparams-in-a-service
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
+    this.routeService.tableId()
+      .pipe(filter(tableId => tableId != null))
       .pipe(first())
-      .subscribe(event => this.subscribeOnParams(event));
+      .subscribe(tableId => this.sendRequest(tableId))
   }
 
   dataAvailable(): Observable<boolean> {
@@ -32,14 +30,6 @@ export class DataService {
 
   rootCategories() {
     return this.dataObservable.pipe(map(data => this.rootCategoryNames(data)));
-  }
-
-  private subscribeOnParams(event) {
-    this.route.firstChild.params
-      .pipe(filter(params => params.tableId)) // TODO error if tableId missing?
-      .pipe(first())
-      .subscribe(params => this.sendRequest(params.tableId));
-
   }
 
   private sendRequest(tableId: string) {
