@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-navbar-query',
   templateUrl: './navbar-query.component.html',
-  styleUrls: ['./navbar-query.component.css', '../styles/navbar-button.css']
+  styleUrls: ['./navbar-query.component.css']
 })
 export class NavbarQueryComponent implements OnInit, OnDestroy {
 

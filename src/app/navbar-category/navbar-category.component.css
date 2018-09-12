@@ -1,0 +1,10 @@
+:host {
+    display: inline-block;
+    padding: .8em .4em;
+    color: #eee;
+    background-color: inherit;
+}
+
+:host.selected {
+    filter: brightness(120%);
+}
