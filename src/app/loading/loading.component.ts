@@ -19,12 +19,10 @@ export class LoadingComponent implements OnInit {
   ngOnInit() {
     const tableIdObservable = this.route.params
       .pipe(filter(params => params != null))
-      .pipe(map(params => params.tableId))
-      .pipe(first());
+      .pipe(map(params => params.tableId));
 
-    const dataAvailableObservable = this.dataService.dataAvailable()
-      .pipe(filter(avaliable => avaliable))
-      .pipe(first());
+    const dataAvailableObservable = this.dataService.rootCategories()
+      .pipe(filter(rootCategories => rootCategories != null));
 
     combineLatest(tableIdObservable, dataAvailableObservable)
       .subscribe( values => {

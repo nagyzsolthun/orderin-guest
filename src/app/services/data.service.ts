@@ -5,46 +5,45 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map, first, filter } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { RouteService } from './route.service';
+import { HttpCacheService } from './http-cache.service';
+import InitState from '../domain/InitState';
+import Category from '../domain/Category';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  private dataObservable: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  private dataAvailableObservable: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private initState = new BehaviorSubject<Object>(null);
 
   constructor(
-    private http: HttpClient,
+    private http: HttpCacheService,
     private routeService: RouteService) {
 
     this.routeService.tableId()
       .pipe(filter(tableId => tableId != null))
       .pipe(first())
-      .subscribe(tableId => this.sendRequest(tableId))
+      .subscribe(tableId => this.requestInitState(tableId))
   }
 
-  dataAvailable(): Observable<boolean> {
-    return this.dataAvailableObservable;
+  rootCategories(): Observable<Array<Category>> {
+    return this.initState
+      .pipe(filter(state => state != null))
+      .pipe(map(InitState.fromJson))
+      .pipe(map(state => state.rootCategories));
   }
 
-  rootCategories() {
-    return this.dataObservable.pipe(map(data => this.rootCategoryNames(data)));
-  }
-
-  private sendRequest(tableId: string) {
+  private requestInitState(tableId: string) {
     console.log(`subscribing on tableId:${tableId}`);
 
-    const url = `${environment.apiUrl}/guest/${tableId}/state`;
-    const options = { withCredentials: true };
-    const httpObservable = this.http.get(url, options).pipe(first());
+    const url = `${environment.apiUrl}/guest/${tableId}/initState`;
+    const httpObservable = this.http.get(url);
 
     httpObservable.subscribe(data => this.onData(data));
   }
 
   private onData(data) {
-    this.dataObservable.next(data);
-    this.dataAvailableObservable.next(true)
+    this.initState.next(data);
   }
 
   private rootCategoryNames(data) {

@@ -3,7 +3,6 @@ import { TestBed, inject } from '@angular/core/testing';
 import { DataService } from './data.service';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { RouteService } from './route.service';
 
 class MockHttpCLient {

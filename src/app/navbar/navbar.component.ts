@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
+import { map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,10 @@ export class NavbarComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.dataService.rootCategories().subscribe(rootCategories => this.rootCategories = rootCategories);
+    this.dataService.rootCategories()
+      .pipe(filter(categories => categories != null))
+      .pipe(map(categories => categories.map(category => category.name)))
+      .subscribe(categories => this.rootCategories = categories);
   }
 
 }

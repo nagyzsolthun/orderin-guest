@@ -2,8 +2,9 @@ import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing'
 
 import { LoadingComponent } from './loading.component';
 import { Router, ActivatedRoute } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { DataService } from '../services/data.service';
+import Category from '../domain/Category';
 
 class MockRoute {
   params = new BehaviorSubject<any>({tableId: "tableId"});
@@ -12,9 +13,9 @@ class MockRouter {
   navigate(commands: Array<string>) { }
 }
 class MockDataService {
-  available = new BehaviorSubject<boolean>(false);
-  dataAvailable() {
-    return this.available;
+  subject = new BehaviorSubject<Array<Category>>(null);
+  rootCategories() {
+    return this.subject;
   }
 }
 
@@ -49,7 +50,7 @@ describe('LoadingComponent', () => {
       route: ActivatedRoute,
       dataService: MockDataService) => {
         const navigation = spyOn(router, 'navigate');
-        dataService.dataAvailable().next(true);
+        dataService.subject.next( new Array<Category>() );
         
         const commands = navigation.calls.first().args[0];
         expect(commands).toEqual(['tableId','products']);
