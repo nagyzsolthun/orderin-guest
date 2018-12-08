@@ -11,13 +11,13 @@ import { SearchService } from './services/search.service';
 import { DataService } from './services/data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductListComponent } from './product-list/product-list.component';
-import { LoadingComponent } from './loading/loading.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 // TODO uuid matching https://gist.github.com/anein/fba647b4206695d109c30e1fc0d2e8ee
 
 const routes: Routes = [
   { path: ':tableId/products', component: ProductListComponent },
-  { path: ':tableId', component: LoadingComponent },
+  { path: ':tableId', component: WelcomeComponent },
 ];
 
 @NgModule({
@@ -28,7 +28,7 @@ const routes: Routes = [
     NavbarQueryComponent,
     NavbarCategoryComponent,
     ProductListComponent,
-    LoadingComponent
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 
-import { LoadingComponent } from './loading.component';
+import { WelcomeComponent } from './welcome.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DataService } from '../services/data.service';
@@ -19,13 +19,13 @@ class MockDataService {
   }
 }
 
-describe('LoadingComponent', () => {
-  let component: LoadingComponent;
-  let fixture: ComponentFixture<LoadingComponent>;
+describe('WelcomeComponent', () => {
+  let component: WelcomeComponent;
+  let fixture: ComponentFixture<WelcomeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoadingComponent],
+      declarations: [WelcomeComponent],
       providers: [
         { provide: Router, useClass: MockRouter },
         { provide: ActivatedRoute, useClass: MockRoute },
@@ -35,7 +35,7 @@ describe('LoadingComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoadingComponent);
+    fixture = TestBed.createComponent(WelcomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

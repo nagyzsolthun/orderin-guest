@@ -5,11 +5,11 @@ import { filter, map, first } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
 
 @Component({
-  selector: 'app-loading',
-  templateUrl: './loading.component.html',
-  styleUrls: ['./loading.component.css']
+  selector: 'app-welcome',
+  templateUrl: './welcome.component.html',
+  styleUrls: ['./welcome.component.css']
 })
-export class LoadingComponent implements OnInit {
+export class WelcomeComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
