@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router';
 
 import { map, first, filter } from 'rxjs/operators';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, ReplaySubject } from 'rxjs';
 
 // service to access routeParams outside of the router-outlet
 @Injectable({
@@ -10,7 +10,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 export class RouteService {
 
-  private routeParamsObservable: BehaviorSubject<Params> = new BehaviorSubject<Params>(null);
+  private routeParamsObservable = new ReplaySubject<Params>(1);
 
   constructor(
     private router: Router,
@@ -29,7 +29,6 @@ export class RouteService {
   }
 
   tableId(): Observable<string> {
-    return this.routeParamsObservable
-      .pipe(map(params => params ? params.tableId : null));
+    return this.routeParamsObservable.pipe(map(params => params.tableId));
   }
 }

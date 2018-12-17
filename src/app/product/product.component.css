@@ -1,0 +1,22 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    font-size: 16px;
+    padding: 12px;
+    margin: 2px;
+    color: #fff;
+    background-color: rgba(20,20,50, 0.2);
+    border: 2px solid #555;
+    border-radius: 16px;
+    transition: border-color 1s;
+}
+:host:active {
+    border: 2px solid #fff;
+    transition: none;
+}
+
+.portions {
+    padding: 0 16px;
+    width: 100%;
+}

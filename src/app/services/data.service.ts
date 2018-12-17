@@ -1,63 +1,56 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, first, filter } from 'rxjs/operators';
+import { BehaviorSubject, Observable, ReplaySubject, Subscriber, throwError } from 'rxjs';
+import { map, first, filter, publishLast, switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { RouteService } from './route.service';
 import { HttpCacheService } from './http-cache.service';
 import InitState from '../domain/InitState';
 import Category from '../domain/Category';
+import Product from '../domain/Product';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  private initState = new BehaviorSubject<Object>(null);
+  private tableIdInitState: Observable<InitState>;
 
   constructor(
     private http: HttpCacheService,
     private routeService: RouteService) {
 
-    this.routeService.tableId()
-      .pipe(filter(tableId => tableId != null))
-      .pipe(first())
-      .subscribe(tableId => this.requestInitState(tableId))
+    this.tableIdInitState = this.routeService.tableId()
+      .pipe(switchMap(tableId => this.initState(tableId)))
   }
 
   rootCategories(): Observable<Array<Category>> {
-    return this.initState
-      .pipe(filter(state => state != null))
-      .pipe(map(InitState.fromJson))
-      .pipe(map(state => state.rootCategories));
+    return this.tableIdInitState.pipe(map(state => state.rootCategories));
   }
 
-  private requestInitState(tableId: string) {
+  productsOf(categoryName: string): Observable<Product[]> {
+    return this.categoryIdByName(categoryName)
+      .pipe(switchMap(categoryId => this.productsOfCategory(categoryId)));
+  }
+
+  private initState(tableId: string): Observable<InitState> {
     console.log(`subscribing on tableId:${tableId}`);
 
-    const url = `${environment.apiUrl}/guest/${tableId}/initState`;
-    const httpObservable = this.http.get(url);
-
-    httpObservable.subscribe(data => this.onData(data));
+    const url = `${environment.apiUrl}/guest/initStateOfTable/${tableId}`;
+    return this.http.get(url).pipe(map(json => InitState.fromJson(json)));
   }
 
-  private onData(data) {
-    this.initState.next(data);
+  private productsOfCategory(categoryId: string): Observable<Product[]> {
+    const url = `${environment.apiUrl}/guest/productsOfCategory/${categoryId}`;
+    return this.http.get(url)
+      .pipe(map(jsonArr => Product.fromJsonArr(jsonArr)));
   }
 
-  private rootCategoryNames(data) {
-    if (data == null) {
-      return [];
-    }
-
-    return data.rootCategories
-      .map(id => this.findCategory(data, id))
-      .filter(category => category != null)
-      .map(category => category.name);
-  }
-
-  private findCategory(data, id) {
-    return data.categories.find(category => category.id == id);
+  private categoryIdByName(categoryName: string): Observable<string> {
+    return this.routeService.tableId().pipe(
+      switchMap(tableId => this.initState(tableId)),
+      map(state => state.rootCategories.find(category => category.name == categoryName).id)
+    );
   }
 }

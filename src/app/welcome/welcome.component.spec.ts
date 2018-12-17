@@ -50,9 +50,11 @@ describe('WelcomeComponent', () => {
       route: ActivatedRoute,
       dataService: MockDataService) => {
         const navigation = spyOn(router, 'navigate');
-        dataService.subject.next( new Array<Category>() );
+
+        const category = Category.fromJson({name: "category"});
+        dataService.subject.next( new Array<Category>(category) );
         
         const commands = navigation.calls.first().args[0];
-        expect(commands).toEqual(['tableId','products']);
+        expect(commands).toEqual(['tableId','products', "category"]);
     }));
 });

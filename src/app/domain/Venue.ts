@@ -1,6 +1,6 @@
 export default class Venue {
-    private name: string;
-    private id: string;
+    name: string;
+    id: string;
 
     static fromJson(json: any): Venue {
         const result = new Venue();

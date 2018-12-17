@@ -12,11 +12,12 @@ import { DataService } from './services/data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductListComponent } from './product-list/product-list.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { ProductComponent } from './product/product.component';
 
 // TODO uuid matching https://gist.github.com/anein/fba647b4206695d109c30e1fc0d2e8ee
 
 const routes: Routes = [
-  { path: ':tableId/products', component: ProductListComponent },
+  { path: ':tableId/products/:category', component: ProductListComponent },
   { path: ':tableId', component: WelcomeComponent },
 ];
 
@@ -28,7 +29,8 @@ const routes: Routes = [
     NavbarQueryComponent,
     NavbarCategoryComponent,
     ProductListComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
