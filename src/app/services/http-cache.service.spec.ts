@@ -4,15 +4,16 @@ import { HttpCacheService } from './http-cache.service';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 
+class MockHttpClient {
+  get = () => of("HttpGetResponse");
+}
+
 describe('HttpCacheService', () => {
   beforeEach(() => {
-    const httpSpy = jasmine.createSpyObj('HttpClient', ['get']);
-    httpSpy.get.and.returnValue(of("HttpGetResponse"));
-
     TestBed.configureTestingModule({
       providers: [
         HttpCacheService,
-        { provide: HttpClient, useValue: httpSpy },
+        { provide: HttpClient, useClass: MockHttpClient },
       ]
     });
   });
