@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProductListComponent } from './product-list/product-list.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { ProductComponent } from './product/product.component';
+import { LoadingComponent } from './loading/loading.component';
 
 // TODO uuid matching https://gist.github.com/anein/fba647b4206695d109c30e1fc0d2e8ee
 
@@ -27,7 +28,8 @@ const routes: Routes = [
     NavbarCategoryComponent,
     ProductListComponent,
     WelcomeComponent,
-    ProductComponent
+    ProductComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

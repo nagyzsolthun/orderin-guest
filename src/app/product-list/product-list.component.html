@@ -1,1 +1,7 @@
-<app-product *ngFor="let product of products$ | async" [name]="product.name"></app-product>
+<ng-container *ngIf="products$ | async as products; else loading">
+    <app-product *ngFor="let product of products" [name]="product.name"></app-product>
+</ng-container>
+
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>

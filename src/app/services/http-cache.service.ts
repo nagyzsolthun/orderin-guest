@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, ReplaySubject, BehaviorSubject } from 'rxjs';
-import { publishLast, refCount, publishReplay } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class HttpCacheService {
       return cached;
     }
 
-    const result = this.http.get(url).pipe(publishReplay(1), refCount());
+    const result = this.http.get(url).pipe(shareReplay(1));
     this.cache.set(url, result)
     return result;
   }

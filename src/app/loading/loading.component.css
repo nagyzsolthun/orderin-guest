@@ -1,0 +1,28 @@
+:host {
+    flex-grow: 1;    /* full height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div {
+    width: 4em;
+    height: 4em;
+}
+
+div:after {
+    content: " ";
+    display: block;
+    width: 4em;
+    height: 4em;
+    margin: -.2em;
+    border-radius: 50%;
+    border: .2em solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: animation 1s linear infinite;
+}
+
+@keyframes animation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

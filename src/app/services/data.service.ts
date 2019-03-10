@@ -33,8 +33,6 @@ export class DataService {
   }
 
   private initState(tableId: string): Observable<InitState> {
-    console.log(`subscribing on tableId:${tableId}`);
-
     const url = `${environment.apiUrl}/initStateOfTable/${tableId}`;
     return this.http.get(url).pipe(map(json => InitState.fromJson(json)));
   }
