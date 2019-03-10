@@ -3,7 +3,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { DataService } from './data.service';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { RouteService } from './route.service';
+import { RouteParamsService } from './route-params.service';
 
 class MockHttpCLient {
   dataObservable = new BehaviorSubject<any>(null);
@@ -12,7 +12,7 @@ class MockHttpCLient {
   }
 }
 
-class MockRouteService {
+class MockRouteParamsService {
   tableIdObservable = new BehaviorSubject<string>(null);
   tableId() {
     return this.tableIdObservable;
@@ -26,7 +26,7 @@ describe('DataService', () => {
       providers: [
         DataService,
         { provide: HttpClient, useClass: MockHttpCLient },
-        { provide: RouteService, useClass: MockRouteService },
+        { provide: RouteParamsService, useClass: MockRouteParamsService },
       ]
     });
   });

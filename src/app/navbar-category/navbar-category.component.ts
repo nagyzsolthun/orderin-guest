@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, HostBinding, HostListener, OnDestroy } from '@angular/core';
-import { RouteService } from '../services/route.service';
+import { RouteParamsService } from '../services/route-params.service';
 import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { first, map } from 'rxjs/operators';
@@ -17,11 +17,11 @@ export class NavbarCategoryComponent implements OnInit, OnDestroy {
   private selectedSubscription: Subscription;
   private tableId$: Observable<string>;
 
-  constructor(private routeService: RouteService, private router: Router) { }
+  constructor(private routeParamsService: RouteParamsService, private router: Router) { }
 
   ngOnInit() {
-    this.tableId$ = this.routeService.tableId();
-    this.selectedSubscription = this.routeService.category()
+    this.tableId$ = this.routeParamsService.tableId();
+    this.selectedSubscription = this.routeParamsService.category()
       .pipe(map(category => category == this.category))
       .subscribe(selected => this.selected = selected);
   }

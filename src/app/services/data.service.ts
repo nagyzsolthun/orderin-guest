@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, ReplaySubject, Subscriber, throwError } from 'rxjs';
-import { map, first, filter, publishLast, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { RouteService } from './route.service';
-import { HttpCacheService } from './http-cache.service';
-import InitState from '../domain/InitState';
 import Category from '../domain/Category';
+import InitState from '../domain/InitState';
 import Product from '../domain/Product';
+import { HttpCacheService } from './http-cache.service';
+import { RouteParamsService } from './route-params.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +17,9 @@ export class DataService {
 
   constructor(
     private http: HttpCacheService,
-    private routeService: RouteService) {
+    private routeParamsService: RouteParamsService) {
 
-    this.tableIdInitState = this.routeService.tableId()
+    this.tableIdInitState = this.routeParamsService.tableId()
       .pipe(switchMap(tableId => this.initState(tableId)))
   }
 
@@ -48,7 +46,7 @@ export class DataService {
   }
 
   private categoryIdByName(categoryName: string): Observable<string> {
-    return this.routeService.tableId().pipe(
+    return this.routeParamsService.tableId().pipe(
       switchMap(tableId => this.initState(tableId)),
       map(state => state.rootCategories.find(category => category.name == categoryName).id)
     );

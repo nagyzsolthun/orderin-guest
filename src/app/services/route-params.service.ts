@@ -8,16 +8,13 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class RouteService {
+export class RouteParamsService {
   private params$: Observable<ParamMap>;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute) {
-
+  constructor(router: Router, route: ActivatedRoute) {
     // subscribe on routeParams
     // based on https://github.com/angular/angular/issues/11023
-    this.params$ = this.router.events
+    this.params$ = router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .pipe(switchMap(() => route.firstChild.paramMap))
       .pipe(shareReplay(1));

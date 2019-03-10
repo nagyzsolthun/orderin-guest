@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
-import { RouteService } from './route.service';
+import { RouteParamsService } from './route-params.service';
 
 
 class MockRouter {
@@ -19,15 +19,15 @@ describe('RouteService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        RouteService,
+        RouteParamsService,
         { provide: Router, useClass: MockRouter },
         { provide: ActivatedRoute, useClass: MockRoute },
       ]
     });
   });
 
-  it('should return tableId when available', inject([RouteService, Router, ActivatedRoute], (
-    service: RouteService,
+  it('should return tableId when available', inject([RouteParamsService, Router, ActivatedRoute], (
+    service: RouteParamsService,
     router: MockRouter,
     route: MockRoute) => {
 
