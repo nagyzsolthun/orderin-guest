@@ -5,9 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { NavbarQueryComponent } from './navbar-query/navbar-query.component';
 import { NavbarCategoryComponent } from './navbar-category/navbar-category.component';
-import { SearchService } from './services/search.service';
 import { DataService } from './services/data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductListComponent } from './product-list/product-list.component';
@@ -26,7 +24,6 @@ const routes: Routes = [
     AppComponent,
     HeaderComponent,
     NavbarComponent,
-    NavbarQueryComponent,
     NavbarCategoryComponent,
     ProductListComponent,
     WelcomeComponent,
@@ -37,7 +34,7 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes, { useHash: true })
   ],
-  providers: [ SearchService, DataService ],
+  providers: [ DataService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
