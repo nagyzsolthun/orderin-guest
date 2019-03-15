@@ -1,4 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import Product from '../domain/Product';
+import { I18nService } from '../services/i18n.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product',
@@ -7,11 +10,14 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ProductComponent implements OnInit {
 
-  @Input() name: string;
-  @Input() id: string;
+  @Input() product: Product;
+
+  localName$: Observable<string>;
+
+  constructor(private i18nService: I18nService) { }
 
   ngOnInit() {
-    
+    this.localName$ = this.i18nService.toLocal(this.product.name);
   }
 
 }
