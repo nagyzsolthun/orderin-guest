@@ -1,17 +1,17 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { NavbarCategoryComponent } from './navbar-category/navbar-category.component';
-import { DataService } from './services/data.service';
 import { HttpClientModule } from '@angular/common/http';
-import { ProductListComponent } from './product-list/product-list.component';
-import { WelcomeComponent } from './welcome/welcome.component';
-import { ProductComponent } from './product/product.component';
-import { LoadingComponent } from './loading/loading.component';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule, Routes } from '@angular/router';
+import { AppComponent } from './components/app/app.component';
+import { HeaderComponent } from './components/header/header.component';
+import { LoadingComponent } from './components/loading/loading.component';
+import { NavbarCategoryComponent } from './components/navbar-category/navbar-category.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { ProductComponent } from './components/product/product.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { DataService } from './services/data.service';
+
 
 // TODO uuid matching https://gist.github.com/anein/fba647b4206695d109c30e1fc0d2e8ee
 

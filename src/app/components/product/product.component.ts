@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import Product from '../domain/Product';
-import { I18nService } from '../services/i18n.service';
 import { Observable } from 'rxjs';
+import Product from 'src/app/domain/Product';
+import { I18nService } from 'src/app/services/i18n.service';
 
 @Component({
   selector: 'app-product',

@@ -1,11 +1,11 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, ReplaySubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { first, shareReplay } from 'rxjs/operators';
-import Product from '../domain/Product';
-import { DataService } from '../services/data.service';
+import Product from 'src/app/domain/Product';
 import { ProductListComponent } from './product-list.component';
+import { DataService } from 'src/app/services/data.service';
 
 
 class MockDataService {

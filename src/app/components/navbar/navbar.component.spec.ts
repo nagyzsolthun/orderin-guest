@@ -1,11 +1,11 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
-
-import { NavbarComponent } from './navbar.component';
-import { NO_ERRORS_SCHEMA, Component, Input } from '@angular/core';
-import { DataService } from '../services/data.service';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
-import Category from '../domain/Category';
 import { first } from 'rxjs/operators';
+import Category from 'src/app/domain/Category';
+import { DataService } from 'src/app/services/data.service';
+import { NavbarComponent } from './navbar.component';
+
 
 class MockDataService {
   rootCategoriesObservable = new BehaviorSubject<Array<Category>>(null);

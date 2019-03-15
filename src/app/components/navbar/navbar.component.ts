@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import Category from '../domain/Category';
-import { DataService } from '../services/data.service';
+import Category from 'src/app/domain/Category';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-navbar',

@@ -1,13 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { NavbarCategoryComponent } from './navbar-category.component';
-import { BehaviorSubject, of } from 'rxjs';
-import { RouteParamsService } from '../services/route-params.service';
 import { Router } from '@angular/router';
-import { I18nService } from '../services/i18n.service';
-import Category from '../domain/Category';
+import { BehaviorSubject, of } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { By } from '@angular/platform-browser';
+import Category from 'src/app/domain/Category';
+import { I18nService } from 'src/app/services/i18n.service';
+import { RouteParamsService } from 'src/app/services/route-params.service';
+import { NavbarCategoryComponent } from './navbar-category.component';
+
 
 class MockRouteParamsService {
   tableId$ = new BehaviorSubject<string>(null);

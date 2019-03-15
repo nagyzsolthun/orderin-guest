@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DataService } from '../services/data.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { filter, map, first } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Subscription } from 'rxjs';
-import { I18nService } from '../services/i18n.service';
+import { map } from 'rxjs/operators';
+import { DataService } from 'src/app/services/data.service';
+import { I18nService } from 'src/app/services/i18n.service';
 
 @Component({
   selector: 'app-welcome',

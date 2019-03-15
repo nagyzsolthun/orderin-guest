@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { of, BehaviorSubject } from 'rxjs';
-import { ProductComponent } from './product.component';
-import { I18nService } from '../services/i18n.service';
-import Product from '../domain/Product';
+import { of } from 'rxjs';
 import { first } from 'rxjs/operators';
+import Product from 'src/app/domain/Product';
+import { I18nService } from 'src/app/services/i18n.service';
+import { ProductComponent } from './product.component';
 
 
 class MockI18nService {

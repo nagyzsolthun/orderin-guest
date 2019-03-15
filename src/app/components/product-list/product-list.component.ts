@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../services/data.service';
 import { ActivatedRoute } from '@angular/router';
-import { map, filter, switchMap, tap, share, startWith, shareReplay } from 'rxjs/operators';
-import Product from '../domain/Product';
-import { Observable, timer } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map, startWith, switchMap } from 'rxjs/operators';
+import Product from 'src/app/domain/Product';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-product-list',

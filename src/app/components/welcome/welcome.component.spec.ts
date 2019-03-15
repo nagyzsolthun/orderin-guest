@@ -3,8 +3,8 @@ import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing'
 import { WelcomeComponent } from './welcome.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { DataService } from '../services/data.service';
-import Category from '../domain/Category';
+import Category from 'src/app/domain/Category';
+import { DataService } from 'src/app/services/data.service';
 
 class MockRoute {
   params = new BehaviorSubject<any>({tableId: "tableId"});

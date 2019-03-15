@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, HostBinding, HostListener, OnDestroy } from '@angular/core';
-import { RouteParamsService } from '../services/route-params.service';
-import { Observable, BehaviorSubject, Subscription } from 'rxjs';
+import { Component, HostBinding, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import { first, map } from 'rxjs/operators';
-import Category from '../domain/Category';
-import { I18nService } from '../services/i18n.service';
+import Category from 'src/app/domain/Category';
+import { I18nService } from 'src/app/services/i18n.service';
+import { RouteParamsService } from 'src/app/services/route-params.service';
 
 @Component({
   selector: 'app-navbar-category',
