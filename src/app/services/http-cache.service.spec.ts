@@ -3,9 +3,10 @@ import { TestBed, inject } from '@angular/core/testing';
 import { HttpCacheService } from './http-cache.service';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 class MockHttpClient {
-  get = () => of("HttpGetResponse");
+  get = (url: string) =>  of("HttpGetResponse");
 }
 
 describe('HttpCacheService', () => {
@@ -18,20 +19,16 @@ describe('HttpCacheService', () => {
     });
   });
 
-  it('should be created', inject([HttpCacheService], (service: HttpCacheService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('provides the same object for repeated get calls on the same url, without sending multiple http requests', () => {
+    const service = TestBed.get(HttpCacheService);
+    const httpClient = TestBed.get(HttpClient);
+    const getSpy = spyOn(httpClient, "get").and.callThrough();
 
-  it('provides the same object for repeated get calls on the same url, without sending multiple http requests', inject([HttpCacheService,HttpClient], (
-    service: HttpCacheService,
-    http: HttpClient) => {
+    service.get("url").pipe(first()).subscribe(json => expect(json).toBe("HttpGetResponse"));
+    expect(getSpy.calls.count()).toBe(1);
     
-    const httpSpy = TestBed.get(HttpClient);
-    service.get("url").subscribe(json => expect(json).toBe("HttpGetResponse"));
-    expect(httpSpy.get.calls.count()).toBe(1);
-    
-    service.get("url").subscribe(json => expect(json).toBe("HttpGetResponse"));
-    expect(httpSpy.get.calls.count()).toBe(1);  // still 1
-  }));
+    service.get("url").pipe(first()).subscribe(json => expect(json).toBe("HttpGetResponse"));
+    expect(getSpy.calls.count()).toBe(1);  // still 1
+  });
 
 });
