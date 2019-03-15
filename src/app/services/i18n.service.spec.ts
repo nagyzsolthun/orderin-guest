@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 
 import { I18nService } from './i18n.service';
 import { first } from 'rxjs/operators';
