@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import Category from '../domain/Category';
 import { DataService } from '../services/data.service';
-import { map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -9,15 +10,12 @@ import { map, filter } from 'rxjs/operators';
 })
 export class NavbarComponent implements OnInit {
 
-  rootCategories: Array<string> = [];
+  rootCategories$: Observable<Category[]>;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.dataService.rootCategories()
-      .pipe(filter(categories => categories != null))
-      .pipe(map(categories => categories.map(category => category.name)))
-      .subscribe(categories => this.rootCategories = categories);
+    this.rootCategories$ = this.dataService.rootCategories();
   }
 
 }

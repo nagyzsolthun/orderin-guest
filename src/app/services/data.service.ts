@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import Category from '../domain/Category';
@@ -7,6 +7,7 @@ import InitState from '../domain/InitState';
 import Product from '../domain/Product';
 import { HttpCacheService } from './http-cache.service';
 import { RouteParamsService } from './route-params.service';
+import { I18nService } from './i18n.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,8 +28,8 @@ export class DataService {
     return this.tableIdInitState.pipe(map(state => state.rootCategories));
   }
 
-  productsOf(categoryName: string): Observable<Product[]> {
-    return this.categoryIdByName(categoryName)
+  productsOf(categoryEnglishName: string): Observable<Product[]> {
+    return this.categoryIdByEnglishName(categoryEnglishName)
       .pipe(switchMap(categoryId => this.productsOfCategory(categoryId)));
   }
 
@@ -43,10 +44,10 @@ export class DataService {
       .pipe(map(jsonArr => Product.fromJsonArr(jsonArr)));
   }
 
-  private categoryIdByName(categoryName: string): Observable<string> {
+  private categoryIdByEnglishName(categoryEnglishName: string): Observable<string> {
     return this.routeParamsService.tableId().pipe(
       switchMap(tableId => this.initState(tableId)),
-      map(state => state.rootCategories.find(category => category.name == categoryName).id)
+      map(state => state.rootCategories.find(category => I18nService.toEnglish(category.name) == categoryEnglishName).id)
     );
   }
 }

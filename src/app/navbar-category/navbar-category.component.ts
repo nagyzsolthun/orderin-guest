@@ -3,6 +3,8 @@ import { RouteParamsService } from '../services/route-params.service';
 import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { first, map } from 'rxjs/operators';
+import Category from '../domain/Category';
+import { I18nService } from '../services/i18n.service';
 
 @Component({
   selector: 'app-navbar-category',
@@ -11,18 +13,27 @@ import { first, map } from 'rxjs/operators';
 })
 export class NavbarCategoryComponent implements OnInit, OnDestroy {
 
-  @Input() category: string;
+  @Input() category: Category;
   @HostBinding('class.selected') selected;
+
+  localName$: Observable<string>;
 
   private selectedSubscription: Subscription;
   private tableId$: Observable<string>;
 
-  constructor(private routeParamsService: RouteParamsService, private router: Router) { }
+  private englishName: string;
+
+  constructor(
+    private routeParamsService: RouteParamsService,
+    private router: Router,
+    private i18nService: I18nService) { }
 
   ngOnInit() {
+    this.localName$ = this.i18nService.toLocal(this.category.name);
+    this.englishName = I18nService.toEnglish(this.category.name);
     this.tableId$ = this.routeParamsService.tableId();
-    this.selectedSubscription = this.routeParamsService.category()
-      .pipe(map(category => category == this.category))
+    this.selectedSubscription = this.routeParamsService.categoryEnglishName()
+      .pipe(map(name => name == this.englishName))
       .subscribe(selected => this.selected = selected);
   }
 
@@ -34,7 +45,7 @@ export class NavbarCategoryComponent implements OnInit, OnDestroy {
   select() {
     this.tableId$
       .pipe(first())
-      .subscribe(tableId => this.router.navigate([tableId, "products", this.category]));
+      .subscribe(tableId => this.router.navigate([tableId, "products", this.englishName]));
   }
 
 }

@@ -1,1 +1,3 @@
-<app-navbar-category *ngFor="let category of rootCategories" [category]="category"></app-navbar-category>
+<ng-container *ngIf="rootCategories$ | async as rootCategories">
+    <app-navbar-category *ngFor="let category of rootCategories" [category]="category"></app-navbar-category>
+</ng-container>

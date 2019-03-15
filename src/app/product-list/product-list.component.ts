@@ -21,12 +21,12 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit() {
     this.products$ = this.route.params.pipe(
-      map(params => params.category),
-      switchMap(category => this.productsOfCategory(category))
+      map(params => params.categoryEnglishName),
+      switchMap(category => this.productsOf(category))
     );
   }
 
-  private productsOfCategory(category: string) {
+  private productsOf(category: string) {
     return this.dataService.productsOf(category).pipe(startWith(undefined));  // startsWith undefined for the animation
   }
 

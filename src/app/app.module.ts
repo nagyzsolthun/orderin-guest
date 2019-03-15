@@ -16,7 +16,7 @@ import { LoadingComponent } from './loading/loading.component';
 // TODO uuid matching https://gist.github.com/anein/fba647b4206695d109c30e1fc0d2e8ee
 
 const routes: Routes = [
-  { path: ':tableId/products/:category', component: ProductListComponent },
+  { path: ':tableId/products/:categoryEnglishName', component: ProductListComponent },
   { path: ':tableId', component: WelcomeComponent },
 ];
 

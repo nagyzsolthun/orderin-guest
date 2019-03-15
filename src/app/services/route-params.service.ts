@@ -24,7 +24,7 @@ export class RouteParamsService {
     return this.params$.pipe(map(params => params.get("tableId")));
   }
 
-  category(): Observable<string> {
-    return this.params$.pipe(map(params => params.get("category")));
+  categoryEnglishName(): Observable<string> {
+    return this.params$.pipe(map(params => params.get("categoryEnglishName")));
   }
 }

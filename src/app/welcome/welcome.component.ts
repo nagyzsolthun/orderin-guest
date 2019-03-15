@@ -3,6 +3,7 @@ import { DataService } from '../services/data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { filter, map, first } from 'rxjs/operators';
 import { combineLatest, Subscription } from 'rxjs';
+import { I18nService } from '../services/i18n.service';
 
 @Component({
   selector: 'app-welcome',
@@ -19,22 +20,15 @@ export class WelcomeComponent implements OnInit,OnDestroy {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const tableId = this.route.params.pipe(
-      filter(params => params != null),
-      map(params => params.tableId)
-    );
-
-    const rootCategories = this.dataService.rootCategories().pipe(
-      filter(rootCategories => rootCategories != null),
-      map(categories => categories.map(category => category.name))
-    );
-
-    this.subscription = combineLatest(tableId, rootCategories).subscribe( values => {
+    const tableId$ = this.route.params.pipe(map(params => params.tableId));
+    const rootCategories$ = this.dataService.rootCategories();
+    this.subscription = combineLatest(tableId$, rootCategories$).subscribe( values => {
       const tableId = values[0];
       const rootCategories = values[1];
 
       const firstCategory = rootCategories[0];
-      this.router.navigate([tableId, "products", firstCategory]);
+      const firstCategoryName = I18nService.toEnglish(firstCategory.name);
+      this.router.navigate([tableId, "products", firstCategoryName]);
     });
   }
 
