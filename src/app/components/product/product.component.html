@@ -1,3 +1,7 @@
-<div>
-  <div>{{localName$ | async}}</div>
+<div class="header">
+    <div class="name">{{localName$ | async}}</div>
+    <div class="loading" *ngIf="loading$ | async"></div>
 </div>
+<ng-container *ngIf="items$ | async as items; else loading">
+    <app-item *ngFor="let item of items" [item]="item"></app-item>
+</ng-container>

@@ -22,7 +22,7 @@ class MockRouter {
 }
 
 class MockI18nService {
-  toLocal(values: Map<string,string>) {
+  localText(values: Map<string,string>) {
     return of(values.get("en"));
   }
 }

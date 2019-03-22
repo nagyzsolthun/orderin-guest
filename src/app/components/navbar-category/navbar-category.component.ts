@@ -29,7 +29,7 @@ export class NavbarCategoryComponent implements OnInit, OnDestroy {
     private i18nService: I18nService) { }
 
   ngOnInit() {
-    this.localName$ = this.i18nService.toLocal(this.category.name);
+    this.localName$ = this.i18nService.localText(this.category.name);
     this.englishName = I18nService.toEnglish(this.category.name);
     this.tableId$ = this.routeParamsService.tableId();
     this.selectedSubscription = this.routeParamsService.categoryEnglishName()

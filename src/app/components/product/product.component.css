@@ -2,21 +2,43 @@
     display: flex;
     flex-direction: column;
     flex: none;
-    font-size: 16px;
-    padding: 12px;
-    margin: 2px;
+    font-size: 1em;
+    padding: .5em;
+    margin: .1em;
     color: #fff;
     background-color: rgba(20,20,50, 0.2);
-    border: 2px solid #555;
-    border-radius: 16px;
+    border: .1em solid #555;
+    border-radius: 1em;
     transition: border-color 1s;
 }
 :host:active {
-    border: 2px solid #fff;
+    border: .1em solid #fff;
     transition: none;
 }
 
-.portions {
-    padding: 0 16px;
-    width: 100%;
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.name {
+    padding: 4px;
+}
+
+.loading:after {
+    content: " ";
+    display: block;
+    width: 1.6em;
+    height: 1.6em;
+    margin: -.1em;
+    border-radius: 50%;
+    border: .1em solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: animation 1s linear infinite;
+}
+
+@keyframes animation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
