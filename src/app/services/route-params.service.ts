@@ -14,10 +14,11 @@ export class RouteParamsService {
   constructor(router: Router, route: ActivatedRoute) {
     // subscribe on routeParams
     // based on https://github.com/angular/angular/issues/11023
-    this.params$ = router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .pipe(switchMap(() => route.firstChild.paramMap))
-      .pipe(shareReplay(1));
+    this.params$ = router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      switchMap(() => route.firstChild.paramMap),
+      shareReplay(1)
+    );
   }
 
   tableId(): Observable<string> {
