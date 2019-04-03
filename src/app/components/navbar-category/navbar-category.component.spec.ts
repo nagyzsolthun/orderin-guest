@@ -6,6 +6,7 @@ import Category from 'src/app/domain/Category';
 import { I18nService } from 'src/app/services/i18n.service';
 import { RouteParamsService } from 'src/app/services/route-params.service';
 import { NavbarCategoryComponent } from './navbar-category.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 
 class MockRouteParamsService {
@@ -38,7 +39,8 @@ describe('NavbarCategoryComponent', () => {
         { provide: RouteParamsService, useClass: MockRouteParamsService },
         { provide: Router, useClass: MockRouter },
         { provide: I18nService, useClass: MockI18nService },
-      ]
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));
@@ -48,42 +50,14 @@ describe('NavbarCategoryComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should be selected if route param matches', () => {
+  it('shows the correct name', () => {
     const routeParamsService = TestBed.get(RouteParamsService);
 
     routeParamsService.categoryEnglishName$.next("category1");
     component.category = Category.fromJson({id:"id1", name:{en:"category1"}});
 
     fixture.detectChanges();
-    component.localName$.pipe(first()).subscribe(name => expect(name).toBe("category1"));
-    expect(component.selected).toBe(true);
-  });
-
-  it('should not be selected if route param does not match', () => {
-    const routeParamsService = TestBed.get(RouteParamsService);
-
-    routeParamsService.categoryEnglishName$.next("category2");
-    component.category = Category.fromJson({id:"id1", name:{en:"category1"}});
-
-    fixture.detectChanges();
-    component.localName$.pipe(first()).subscribe(name => expect(name).toBe("category1"));
-    expect(component.selected).toBe(false);
-  });
-
-  it('should navigate when selected', () => {
-    const routeParamsService = TestBed.get(RouteParamsService);
-    const router = TestBed.get(Router);
-
-    const navigateSpy = spyOn(router, "navigate");
-
-    routeParamsService.tableId$.next("tableId");
-    routeParamsService.categoryEnglishName$.next("category2");
-    component.category = Category.fromJson({id:"id1", name:{en:"category1"}});
-    fixture.detectChanges();
-
-    component.select();
-    fixture.detectChanges();
-    expect(navigateSpy).toHaveBeenCalledWith( ["tableId", "products", "category1"] );
+    component.data$.pipe(first()).subscribe(data => expect(data.englishName).toBe("category1"));
   });
 
 });

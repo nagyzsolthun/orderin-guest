@@ -1,10 +1,17 @@
 :host {
+    background-color: #26e;
+    flex: none;
+    white-space: nowrap;
+}
+
+a {
     display: inline-block;
     padding: .8em .4em;
+    text-decoration: none;
     color: #eee;
     background-color: inherit;
 }
 
-:host.selected {
+a.selected {
     filter: brightness(120%);
 }
