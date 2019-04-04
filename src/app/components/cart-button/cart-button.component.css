@@ -1,0 +1,18 @@
+a {
+    display: block;
+    font-size: 1.2em;
+    padding: 0.5em;
+    text-align: center;
+    text-decoration: none;
+    pointer-events: none;
+    background-color: rgba(0,70,0,0.4);
+    border-top: .05em solid #040;
+}
+
+.name { color: #fff; }
+.count { color: #888; }
+.price { color: #0d0; }
+
+span {
+    margin: 0 0.1em;
+}

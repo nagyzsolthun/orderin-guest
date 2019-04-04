@@ -1,0 +1,7 @@
+<ng-container *ngIf="data$ | async as data">
+  <a [routerLink]="[ data.tableId, 'cart' ]" routerLinkActive="opened">
+    <span class="name">Cart</span>
+    <span class="count">({{data.count}})</span>
+    <span class="price">{{data.price}}</span>
+  </a>
+</ng-container>
