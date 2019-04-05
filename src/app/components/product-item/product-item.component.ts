@@ -4,11 +4,11 @@ import Item from 'src/app/domain/Item';
 import { I18nService } from 'src/app/services/i18n.service';
 
 @Component({
-  selector: 'app-item',
-  templateUrl: './item.component.html',
-  styleUrls: ['./item.component.css']
+  selector: 'app-product-item',
+  templateUrl: './product-item.component.html',
+  styleUrls: ['./product-item.component.css']
 })
-export class ItemComponent implements OnInit {
+export class ProductItemComponent implements OnInit {
 
   @Input() item: Item;
 

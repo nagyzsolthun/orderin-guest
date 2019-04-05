@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ItemComponent } from './item.component';
+import { ProductItemComponent } from './product-item.component';
 import { I18nService } from 'src/app/services/i18n.service';
 import { of } from 'rxjs';
 import Item from 'src/app/domain/Item';
@@ -19,13 +19,13 @@ class MockI18nService {
   }
 }
 
-describe('ItemComponent', () => {
-  let component: ItemComponent;
-  let fixture: ComponentFixture<ItemComponent>;
+describe('ProductItemComponent', () => {
+  let component: ProductItemComponent;
+  let fixture: ComponentFixture<ProductItemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ItemComponent],
+      declarations: [ProductItemComponent],
       providers: [
         { provide: I18nService, useClass: MockI18nService },
       ]
@@ -33,7 +33,7 @@ describe('ItemComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ItemComponent);
+    fixture = TestBed.createComponent(ProductItemComponent);
     component = fixture.componentInstance;
   });
 
