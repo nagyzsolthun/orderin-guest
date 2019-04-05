@@ -4,9 +4,12 @@ a {
     padding: 0.5em;
     text-align: center;
     text-decoration: none;
-    pointer-events: none;
     background-color: rgba(0,70,0,0.4);
     border-top: .05em solid #040;
+}
+
+a.opened {
+    display: none;
 }
 
 .name { color: #fff; }
