@@ -5,7 +5,7 @@ import Product from 'src/app/domain/Product';
 import { I18nService } from 'src/app/services/i18n.service';
 import { ProductComponent } from './product.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import Item from 'src/app/domain/Item';
+import ProductItem from 'src/app/domain/ProductItem';
 import { DataService } from 'src/app/services/data.service';
 
 
@@ -17,7 +17,7 @@ class MockI18nService {
 
 class MockDataService {
   openedProduct$ = new BehaviorSubject<string>(null);
-  items$ = new BehaviorSubject<Item[]>(null);
+  items$ = new BehaviorSubject<ProductItem[]>(null);
   openedProduct() {
     return this.openedProduct$;
   }
@@ -70,7 +70,7 @@ describe('ProductComponent', () => {
     component.loading$.pipe(first()).subscribe(loading => expect(loading).toBeFalsy);
 
     dataSerice.openedProduct$.next("id1");
-    dataSerice.items$.next([Item.fromJson({ name: {}, price: {} })]);
+    dataSerice.items$.next([ProductItem.fromJson({ name: {}, price: {} })]);
     fixture.detectChanges();
     component.loading$.pipe(first()).subscribe(loading => expect(loading).toBeFalsy);
   });
@@ -82,7 +82,7 @@ describe('ProductComponent', () => {
     fixture.detectChanges();
     component.loading$.pipe(first()).subscribe(loading => expect(loading).toBeTruthy);
 
-    dataSerice.items$.next([Item.fromJson({ name: {}, price: {} })]);
+    dataSerice.items$.next([ProductItem.fromJson({ name: {}, price: {} })]);
     fixture.detectChanges();
     component.loading$.pipe(first()).subscribe(loading => expect(loading).toBeFalsy);
   });

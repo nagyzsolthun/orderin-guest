@@ -8,7 +8,7 @@ import Product from '../domain/Product';
 import { HttpCacheService } from './http-cache.service';
 import { RouteParamsService } from './route-params.service';
 import { I18nService } from './i18n.service';
-import Item from '../domain/Item';
+import ProductItem from '../domain/ProductItem';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,7 @@ export class DataService {
       .pipe(switchMap(categoryId => this.productsOfCategory(categoryId)));
   }
 
-  itemsOf(productId: string): Observable<Item[]> {
+  itemsOf(productId: string): Observable<ProductItem[]> {
     return this.initState$.pipe(
       map(state => state.venue.id),
       switchMap(venueId => this.itemsOfProduct(venueId,productId))
@@ -68,9 +68,9 @@ export class DataService {
     );
   }
 
-  private itemsOfProduct(venueId: string, productId: string): Observable<Item[]> {
+  private itemsOfProduct(venueId: string, productId: string): Observable<ProductItem[]> {
     const url = `${environment.apiUrl}/itemsOfProduct/${venueId}/${productId}`;
     return this.http.get(url)
-      .pipe(map(json => Item.fromJsonArr(json)));
+      .pipe(map(json => ProductItem.fromJsonArr(json)));
   }
 }

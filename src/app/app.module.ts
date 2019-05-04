@@ -13,12 +13,15 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { ProductComponent } from './components/product/product.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { DataService } from './services/data.service';
+import { CartComponent } from './components/cart/cart.component';
+import { CartItemComponent } from './components/cart-item/cart-item.component';
 
 
 // TODO uuid matching https://gist.github.com/anein/fba647b4206695d109c30e1fc0d2e8ee
 
 const routes: Routes = [
   { path: ':tableId/products/:categoryEnglishName', component: ProductListComponent },
+  { path: ':tableId/cart', component: CartComponent },
   { path: ':tableId', component: WelcomeComponent },
 ];
 
@@ -33,7 +36,9 @@ const routes: Routes = [
     ProductComponent,
     LoadingComponent,
     ProductItemComponent,
-    CartButtonComponent
+    CartButtonComponent,
+    CartComponent,
+    CartItemComponent
   ],
   imports: [
     BrowserModule,

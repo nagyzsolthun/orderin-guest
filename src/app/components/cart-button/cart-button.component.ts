@@ -12,17 +12,16 @@ import { I18nService } from 'src/app/services/i18n.service';
 })
 export class CartButtonComponent implements OnInit {
 
-  data$: Observable<{tableId:string, count:number, price:string}>;
+  data$: Observable<{tableId:string, count:number, price: string}>;
 
   constructor(
     private routeParamsService: RouteParamsService,
-    private i18nService: I18nService,
     private cartService: CartService) { }
 
   ngOnInit() {
     const tableId$ = this.routeParamsService.tableId();
     const count$ = this.cartService.count();
-    const prices$ = this.cartService.prices().pipe(map(prices => prices.map(price => price.value + " " + price.currency)));
+    const prices$ = this.cartService.prices().pipe(map(prices => Array.from(prices.keys()).map(currency => prices.get(currency) + " " + currency)));
     this.data$ = combineLatest(tableId$, count$, prices$).pipe(map(values => {
       const tableId = values[0];
       const count = values[1];

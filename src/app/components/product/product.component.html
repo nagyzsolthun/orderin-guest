@@ -1,7 +1,7 @@
-<div class="header">
+<div class="header" (click)=open()>
     <div class="name">{{localName$ | async}}</div>
     <div class="loading" *ngIf="loading$ | async"></div>
 </div>
 <ng-container *ngIf="items$ | async as items">
-    <app-product-item *ngFor="let item of items" [item]="item"></app-product-item>
+    <app-product-item *ngFor="let item of items" [product]="product" [item]="item"></app-product-item>
 </ng-container>

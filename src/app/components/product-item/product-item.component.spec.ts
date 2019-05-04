@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProductItemComponent } from './product-item.component';
 import { I18nService } from 'src/app/services/i18n.service';
 import { of } from 'rxjs';
-import Item from 'src/app/domain/Item';
+import ProductItem from 'src/app/domain/ProductItem';
 import { first } from 'rxjs/operators';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
@@ -38,7 +38,7 @@ describe('ProductItemComponent', () => {
   });
 
   it('should show the correct name,price,currency', () => {
-    component.item = Item.fromJson({ name: { hu: "Tétel", en: "Item" }, price: { HUF: 490, EUR: 2 } })
+    component.item = ProductItem.fromJson({ name: { hu: "Tétel", en: "Item" }, price: { HUF: 490, EUR: 2 } })
     fixture.detectChanges();
 
     component.name$.pipe(first()).subscribe(name => expect(name).toBe("Tétel"));

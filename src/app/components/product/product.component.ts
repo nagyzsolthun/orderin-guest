@@ -4,7 +4,7 @@ import { map, switchAll, switchMap, distinctUntilChanged, tap } from 'rxjs/opera
 import Product from 'src/app/domain/Product';
 import { DataService } from 'src/app/services/data.service';
 import { I18nService } from 'src/app/services/i18n.service';
-import Item from 'src/app/domain/Item';
+import ProductItem from 'src/app/domain/ProductItem';
 
 @Component({
   selector: 'app-product',
@@ -17,7 +17,7 @@ export class ProductComponent implements OnInit {
 
   localName$: Observable<string>;
   loading$: Observable<boolean>;
-  items$: Observable<Item[]>;
+  items$: Observable<ProductItem[]>;
 
   constructor(
     private i18nService: I18nService,
@@ -35,7 +35,6 @@ export class ProductComponent implements OnInit {
     }))
   }
 
-  @HostListener("click")
   open() {
     this.dataService.openProdut(this.product.id);
   }

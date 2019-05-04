@@ -1,0 +1,30 @@
+:host {
+    display: flex;
+    justify-content: space-between; /* so prices will align to the right */
+}
+
+.productName {
+    font-size: 16px;
+    width: 70%;
+    color: white;
+    padding: 4px;
+    text-align: left;
+    transition: color 1s;
+}
+.portionName {
+    font-size: 16px;
+    width: 70%;
+    color: #888;
+    padding: 4px;
+    text-align: left;
+    transition: color 1s;
+}
+
+.price {
+    font-size: 16px;
+    width: 30%;
+    color: #4f4;
+    padding: 4px;
+    text-align: right;
+    transition: color 1s;
+}
