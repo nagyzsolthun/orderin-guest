@@ -23,8 +23,8 @@ class MockRouter {
 }
 
 class MockI18nService {
-  localText(values: Map<string,string>) {
-    return of(values.get("en"));
+  localText(i18n: Map<string,string>) {
+    return of(i18n.get("en"));
   }
 }
 

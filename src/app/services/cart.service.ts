@@ -23,11 +23,11 @@ export class CartService {
     );
   }
 
-  prices(): Observable<Map<string,number>> {
+  price(): Observable<Map<string,number>> {
     return this.items$.pipe(
-      map(items => items.map(item => this.itemLocalPrice(item))),
-      switchMap(itemPriceObservables => combineLatest(...itemPriceObservables) as Observable<[[string,number]]> ),
-      map(itemPrices => this.sumPrices(itemPrices))
+      map(items => items.map(item => this.calcLocalPrice(item))),
+      switchMap(localPriceObservables => combineLatest(...localPriceObservables) as Observable<[LocalPrice]> ),
+      map(localPrices => this.sumLocalPrices(localPrices))
     );
   }
 
@@ -41,18 +41,19 @@ export class CartService {
     this.items$.next(Array.from(this.idToItem.values()))
   }
 
-  private itemLocalPrice(item: CartItem): Observable<[string,number]> {
+  private calcLocalPrice(item: CartItem): Observable<LocalPrice> {
     const currency = this.i18nService.localCurrency(item.price);
-    const amount = this.i18nService.localValue(item.price).pipe(map(amount => amount * item.count));
-    return combineLatest(currency, amount);
+    const amount = this.i18nService.localAmount(item.price).pipe(map(amount => amount * item.count));
+    return combineLatest(currency, amount)
+      .pipe(map( ([currency,amount]) => new LocalPrice(currency,amount)));
   }
   
-  private sumPrices(prices: [[string,number]]): Map<string,number> {
+  private sumLocalPrices(localPrices: LocalPrice[]): Map<string,number> {
     const result = new Map<string,number>();
-    prices.forEach(price => {
-      const currency = price[0];
-      const amount = price[1];
-      const currenySum = result.get(currency) || 0;
+    localPrices.forEach(price => {
+      const currency = price.currency;
+      const amount = price.amount;
+      const currenySum = result.get(price.currency) || 0;
       result.set(currency, currenySum + amount);
     });
     return result;
@@ -69,4 +70,8 @@ export class CartService {
     this.idToItem.set(itemId, result);
     return result;
   }
+}
+
+class LocalPrice {
+  constructor(public currency: string, public amount: number) { }
 }

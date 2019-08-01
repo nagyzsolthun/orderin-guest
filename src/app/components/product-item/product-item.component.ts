@@ -16,7 +16,7 @@ export class ProductItemComponent implements OnInit {
   @Input() item: ProductItem;
 
   name$: Observable<string>;
-  value$: Observable<number>;
+  amount$: Observable<number>;
   currency$: Observable<string>
 
   constructor(
@@ -26,7 +26,7 @@ export class ProductItemComponent implements OnInit {
 
   ngOnInit() {
     this.name$ = this.i18nService.localText(this.item.name);
-    this.value$ = this.i18nService.localValue(this.item.price);
+    this.amount$ = this.i18nService.localAmount(this.item.price);
     this.currency$ = this.i18nService.localCurrency(this.item.price);
   }
 

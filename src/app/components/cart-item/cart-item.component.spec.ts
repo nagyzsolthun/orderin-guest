@@ -6,9 +6,9 @@ import { I18nService } from 'src/app/services/i18n.service';
 import { CartItemComponent } from './cart-item.component';
 
 class MockI18nService {
-  localText(values: Map<string, string>) { return of(values.get("en")) }
-  localCurrency(values: Map<string, number>) { return of("HUF") }
-  localValue(values: Map<string, number>) { return of(values.get("HUF")) }
+  localText(i18n: Map<string, string>) { return of(i18n.get("en")) }
+  localCurrency(price: Map<string, number>) { return of("HUF") }
+  localAmount(price: Map<string, number>) { return of(price.get("HUF")) }
 }
 
 describe('CartItemComponent', () => {

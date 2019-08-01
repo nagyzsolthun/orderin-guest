@@ -22,10 +22,7 @@ export class WelcomeComponent implements OnInit,OnDestroy {
   ngOnInit() {
     const tableId$ = this.route.params.pipe(map(params => params.tableId));
     const rootCategories$ = this.dataService.rootCategories();
-    this.subscription = combineLatest(tableId$, rootCategories$).subscribe( values => {
-      const tableId = values[0];
-      const rootCategories = values[1];
-
+    this.subscription = combineLatest(tableId$, rootCategories$).subscribe( ([tableId,rootCategories]) => {
       const firstCategory = rootCategories[0];
       const firstCategoryName = I18nService.toEnglish(firstCategory.name);
       this.router.navigate([tableId, "products", firstCategoryName]);

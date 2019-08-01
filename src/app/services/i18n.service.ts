@@ -30,12 +30,12 @@ export class I18nService {
     return this.language$.pipe(map(lan => I18nService.toLanguage(i18n,lan)));
   }
 
-  localCurrency(prices: Map<string,number>): Observable<string> {
-    return this.currency$.pipe(map(currency => I18nService.selectCurrency(prices,currency)));
+  localCurrency(price: Map<string,number>): Observable<string> {
+    return this.currency$.pipe(map(currency => I18nService.selectCurrency(price,currency)));
   }
 
-  localValue(prices: Map<string,number>): Observable<number> {
-    return this.localCurrency(prices).pipe(map(currency => prices.get(currency)));
+  localAmount(price: Map<string,number>): Observable<number> {
+    return this.localCurrency(price).pipe(map(currency => price.get(currency)));
   }
 
   static toEnglish(i18n: Map<string,string>): string {

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
 import { RouteParamsService } from 'src/app/services/route-params.service';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { CartService } from 'src/app/services/cart.service';
-import { I18nService } from 'src/app/services/i18n.service';
 
 @Component({
   selector: 'app-cart-button',
@@ -21,18 +20,16 @@ export class CartButtonComponent implements OnInit {
   ngOnInit() {
     const tableId$ = this.routeParamsService.tableId();
     const count$ = this.cartService.count();
-    const prices$ = this.cartService.prices().pipe(map(prices => Array.from(prices.keys()).map(currency => prices.get(currency) + " " + currency)));
-    this.data$ = combineLatest(tableId$, count$, prices$).pipe(map(values => {
-      const tableId = values[0];
-      const count = values[1];
-      const prices = values[2];
-
+    const price$ = this.cartService.price().pipe(map(price =>
+      Array.from(price.keys())
+      .map(currency => price.get(currency) + " " + currency)
+      .join(" + ")
+    ));
+    this.data$ = combineLatest(tableId$, count$, price$).pipe(map( ([tableId, count, price]) => {
       // so no cart will be shown
       if(!count) {
         return null;
       }
-
-      const price = prices.join(" + ");
       return { tableId, count, price };
     }))
   }

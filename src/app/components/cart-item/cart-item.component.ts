@@ -15,7 +15,7 @@ export class CartItemComponent implements OnInit {
 
   productName$: Observable<string>;
   portionName$: Observable<string>;
-  priceValue$: Observable<number>;
+  priceAmount$: Observable<number>;
   priceCurrency$: Observable<string>;
   count: number;
 
@@ -24,7 +24,7 @@ export class CartItemComponent implements OnInit {
   ngOnInit() {
     this.productName$ = this.i18nService.localText(this.item.productName);
     this.portionName$ = this.i18nService.localText(this.item.portionName);
-    this.priceValue$ = this.i18nService.localValue(this.item.price).pipe(map(amount => amount*this.item.count));
+    this.priceAmount$ = this.i18nService.localAmount(this.item.price).pipe(map(amount => amount*this.item.count));
     this.priceCurrency$ = this.i18nService.localCurrency(this.item.price);
     this.count = this.item.count;
   }

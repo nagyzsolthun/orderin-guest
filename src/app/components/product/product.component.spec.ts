@@ -10,7 +10,7 @@ import { DataService } from 'src/app/services/data.service';
 
 
 class MockI18nService {
-  localText(values: Map<string, string>) {
+  localText(i18n: Map<string, string>) {
     return of("LocalI18n")
   }
 }

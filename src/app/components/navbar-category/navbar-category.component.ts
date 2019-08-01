@@ -26,9 +26,7 @@ export class NavbarCategoryComponent implements OnInit {
     const tableId$ = this.routeParamsService.tableId();
     const englishName = I18nService.toEnglish(this.category.name);
 
-    this.data$ = combineLatest(localName$, tableId$).pipe(map(values => {
-      const localName = values[0];
-      const tableId = values[1];
+    this.data$ = combineLatest(localName$, tableId$).pipe(map( ([localName,tableId]) => {
       return { localName, tableId, englishName };
     }))
   }

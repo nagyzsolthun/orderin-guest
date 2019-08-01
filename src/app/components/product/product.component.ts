@@ -28,9 +28,7 @@ export class ProductComponent implements OnInit {
     this.localName$ = this.i18nService.localText(this.product.name);
     const opened$ = this.dataService.openedProduct().pipe(map(productId => productId == this.product.id));
     this.items$ = opened$.pipe(switchMap(opened => opened ? this.dataService.itemsOf(this.product.id) : of(null)));
-    this.loading$ = combineLatest(opened$, this.items$).pipe(map(values => {
-      const opened = values[0];
-      const items = values[1];
+    this.loading$ = combineLatest(opened$, this.items$).pipe(map( ([opened,items]) => {
       return opened && !items;
     }))
   }

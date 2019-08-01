@@ -8,14 +8,14 @@ import { first } from 'rxjs/operators';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 class MockI18nService {
-  localText(values: Map<string, string>) {
-    return of(values.get("hu"));
+  localText(i18n: Map<string, string>) {
+    return of(i18n.get("hu"));
   }
-  localCurrency(prices: Map<string, number>) {
+  localCurrency(price: Map<string, number>) {
     return of("HUF");
   }
-  localValue(prices: Map<string, number>) {
-    return of(prices.get("HUF"))
+  localAmount(price: Map<string, number>) {
+    return of(price.get("HUF"))
   }
 }
 
@@ -43,6 +43,6 @@ describe('ProductItemComponent', () => {
 
     component.name$.pipe(first()).subscribe(name => expect(name).toBe("Tétel"));
     component.currency$.pipe(first()).subscribe(currency => expect(currency).toBe("HUF"));
-    component.value$.pipe(first()).subscribe(value => expect(value).toBe(490));
+    component.amount$.pipe(first()).subscribe(amount => expect(amount).toBe(490));
   });
 });

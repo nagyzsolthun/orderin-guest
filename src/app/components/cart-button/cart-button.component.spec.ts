@@ -13,7 +13,7 @@ class MockRouteParamsService {
 
 class MockCartService {
   count() { return of(2); }
-  prices() { return of(new Map([["EUR", 3], ["HUF", 1000]])); }
+  price() { return of(new Map([["EUR", 3], ["HUF", 1000]])); }
 }
 
 describe('CartButtonComponent', () => {
