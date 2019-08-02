@@ -9,6 +9,7 @@ import { HttpCacheService } from './http-cache.service';
 import { RouteParamsService } from './route-params.service';
 import { I18nService } from './i18n.service';
 import ProductItem from '../domain/ProductItem';
+import Venue from '../domain/Venue';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,10 @@ export class DataService {
 
     this.initState$ = this.routeParamsService.tableId()
       .pipe(switchMap(tableId => this.initState(tableId)))
+  }
+
+  venue(): Observable<Venue> {
+    return this.initState$.pipe(map(state => state.venue));
   }
 
   rootCategories(): Observable<Array<Category>> {

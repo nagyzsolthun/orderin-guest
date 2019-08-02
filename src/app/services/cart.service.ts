@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, Observable, of, ReplaySubject } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, first } from 'rxjs/operators';
 import CartItem from '../domain/CartItem';
 import ProductItem from '../domain/ProductItem';
 import Product from '../domain/Product';
 import { I18nService } from './i18n.service';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +17,10 @@ export class CartService {
   private idToItem = new Map<string,CartItem>();   // key is productId|portionId
   private items$ = new ReplaySubject<CartItem[]>(1);
 
-  constructor(private i18nService: I18nService) { }
+  constructor(
+    private dataService: DataService,
+    private i18nService: I18nService,
+    private http: HttpClient) { }
 
   count(): Observable<number> {
     return this.items$.pipe(
@@ -36,9 +42,14 @@ export class CartService {
   }
 
   add(product: Product, item: ProductItem) {
-    const cartItem = this.calcCartItem(product, item);
-    cartItem.count++;
-    this.items$.next(Array.from(this.idToItem.values()))
+    const url = `${environment.apiUrl}/addToCart`;
+    this.dataService.venue().pipe(first(), switchMap(venue => {
+      const params = new HttpParams()
+        .set("productId", product.id)
+        .set("portionId", item.portion)
+        .set("venueId", venue.id);
+      return this.http.put(url, {}, {params});
+    })).subscribe(_ => this.addToLocalCache(product,item)); // TODO loading + error handling
   }
 
   private calcLocalPrice(item: CartItem): Observable<LocalPrice> {
@@ -57,6 +68,12 @@ export class CartService {
       result.set(currency, currenySum + amount);
     });
     return result;
+  }
+
+  private addToLocalCache(product: Product, item: ProductItem) {
+    const cartItem = this.calcCartItem(product, item);
+    cartItem.count++;
+    this.items$.next(Array.from(this.idToItem.values()));
   }
 
   private calcCartItem(product: Product, item: ProductItem) {
