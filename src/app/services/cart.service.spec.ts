@@ -4,15 +4,36 @@ import ProductItem from '../domain/ProductItem';
 import Product from '../domain/Product';
 import { CartService } from './cart.service';
 import { I18nService } from './i18n.service';
+import { of } from 'rxjs';
+import Venue from '../domain/Venue';
+import { DataService } from './data.service';
+import { HttpClient } from '@angular/common/http';
 
+class MockDataService {
+  venue() {
+    return of(Venue.fromJson({ id: "venueId", name: "venueName" }));
+  }
+}
+
+class MockHttpClient {
+  put() {
+    return of(1);
+  }
+}
 
 describe('CartService', () => {
   beforeEach(() => {
-    TestBed.configureTestingModule({ providers: [CartService] });
+    TestBed.configureTestingModule({
+      providers: [
+        CartService,
+        { provide: DataService, useClass: MockDataService },
+        { provide: HttpClient, useClass: MockHttpClient }
+      ]
+    });
   });
 
   it('should increase count as new items are added', () => {
-    const service: CartService = TestBed.get(CartService);
+    const service = TestBed.get(CartService) as CartService;
     const count$ = service.count();
 
     const product1 = Product.fromJson({ id: "product1", name: { en: "Product1" } });
@@ -25,9 +46,20 @@ describe('CartService', () => {
     count$.pipe(first()).subscribe(count => expect(count).toBe(2));
   });
 
+  it('should send addToCart request when new item is added', () => {
+    const service = TestBed.get(CartService) as CartService;
+    const httpClient = TestBed.get(HttpClient) as HttpClient;
+    const product1 = Product.fromJson({ id: "product1", name: { en: "Product1" } });
+    const productItem1 = ProductItem.fromJson({ portion: "portion1", name: { en: "Portion1" }, price: { "HUF": 1500, "EUR": 5 } });
+
+    spyOn(httpClient, "put");
+    service.add(product1, productItem1);
+    expect(httpClient.put).toHaveBeenCalled();
+  });
+
   it('should sum per preferred currency', () => {
-    const service: CartService = TestBed.get(CartService);
-    const i18nService = TestBed.get(I18nService);
+    const service = TestBed.get(CartService) as CartService;
+    const i18nService = TestBed.get(I18nService)as I18nService;
     const price$ = service.price();
 
     const product1 = Product.fromJson({ id: "product1", name: { en: "Product1" } });
@@ -49,8 +81,8 @@ describe('CartService', () => {
   });
 
   it('should include multiple currencies when the preferred one is not available for an item', () => {
-    const service: CartService = TestBed.get(CartService);
-    const i18nService = TestBed.get(I18nService);
+    const service = TestBed.get(CartService) as CartService;
+    const i18nService = TestBed.get(I18nService) as I18nService;
     const price$ = service.price();
 
     const product1 = Product.fromJson({ id: "product1", name: { en: "Product1" } });

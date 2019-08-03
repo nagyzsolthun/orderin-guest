@@ -4,8 +4,8 @@ import { ProductItemComponent } from './product-item.component';
 import { I18nService } from 'src/app/services/i18n.service';
 import { of } from 'rxjs';
 import ProductItem from 'src/app/domain/ProductItem';
-import { first } from 'rxjs/operators';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import Product from 'src/app/domain/Product';
+import { CartService } from 'src/app/services/cart.service';
 
 class MockI18nService {
   localText(i18n: Map<string, string>) {
@@ -19,15 +19,21 @@ class MockI18nService {
   }
 }
 
+class MockCartService {
+  add(product: Product, item: ProductItem) { }
+}
+
 describe('ProductItemComponent', () => {
-  let component: ProductItemComponent;
   let fixture: ComponentFixture<ProductItemComponent>;
+  let component: ProductItemComponent;
+  let compiled: HTMLElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ProductItemComponent],
       providers: [
         { provide: I18nService, useClass: MockI18nService },
+        { provide: CartService, useClass: MockCartService }
       ]
     }).compileComponents();
   }));
@@ -35,14 +41,25 @@ describe('ProductItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductItemComponent);
     component = fixture.componentInstance;
+    compiled = fixture.debugElement.nativeElement;
   });
 
-  it('should show the correct name,price,currency', () => {
+  it('should show the correct name and price', () => {
     component.item = ProductItem.fromJson({ name: { hu: "Tétel", en: "Item" }, price: { HUF: 490, EUR: 2 } })
     fixture.detectChanges();
+    expect(compiled.querySelector(".name").textContent).toBe("Tétel");
+    expect(compiled.querySelector(".price").textContent).toBe("490 HUF");
+  });
 
-    component.name$.pipe(first()).subscribe(name => expect(name).toBe("Tétel"));
-    component.currency$.pipe(first()).subscribe(currency => expect(currency).toBe("HUF"));
-    component.amount$.pipe(first()).subscribe(amount => expect(amount).toBe(490));
+  it('should add item to cart when clicked', () => {
+    const cartService = TestBed.get(CartService);
+    spyOn(cartService, 'add');
+
+    component.product = Product.fromJson({ name: { hu: "Termék", en: "Product" } });
+    component.item = ProductItem.fromJson({ name: { hu: "Tétel", en: "Item" }, price: { HUF: 490, EUR: 2 } });
+    fixture.detectChanges();
+    
+    compiled.click();
+    expect(cartService.add).toHaveBeenCalledWith(component.product, component.item);
   });
 });
