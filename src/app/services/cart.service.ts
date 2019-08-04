@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, Observable, of, ReplaySubject } from 'rxjs';
-import { map, switchMap, first } from 'rxjs/operators';
+import { map, switchMap, first, shareReplay, tap } from 'rxjs/operators';
 import CartItem from '../domain/CartItem';
 import ProductItem from '../domain/ProductItem';
 import Product from '../domain/Product';
@@ -14,22 +14,32 @@ import { DataService } from './data.service';
 })
 export class CartService {
 
-  private idToItem = new Map<string,CartItem>();   // key is productId|portionId
+  private items = new Array<CartItem>();
   private items$ = new ReplaySubject<CartItem[]>(1);
 
   constructor(
     private dataService: DataService,
     private i18nService: I18nService,
-    private http: HttpClient) { }
+    private http: HttpClient) {
+      dataService.venue().pipe(
+        map(venue => venue.id),
+        map(venueId => `${environment.apiUrl}/cart/${venueId}`),
+        switchMap(cartUrl => http.get(cartUrl))
+      ).subscribe(cart => {
+        const cartItems = cart as [];
+        this.items = cartItems.map(CartItem.fromJson);
+        this.items$.next(this.items);
+      });
+    }
 
-  count(): Observable<number> {
+  getCount(): Observable<number> {
     return this.items$.pipe(
       map(items => items.map(item => item.count)),
-      map(counts => counts.reduce((sum,count) => sum + count))
+      map(counts => counts.reduce((sum,count) => sum + count, 0))
     );
   }
 
-  price(): Observable<Map<string,number>> {
+  getPrice(): Observable<Map<string,number>> {
     return this.items$.pipe(
       map(items => items.map(item => this.calcLocalPrice(item))),
       switchMap(localPriceObservables => combineLatest(...localPriceObservables) as Observable<[LocalPrice]> ),
@@ -37,11 +47,11 @@ export class CartService {
     );
   }
 
-  items(): Observable<CartItem[]> {
+  getItems(): Observable<CartItem[]> {
     return this.items$;
   }
 
-  add(product: Product, item: ProductItem) {
+  addItem(product: Product, item: ProductItem) {
     const url = `${environment.apiUrl}/addToCart`;
     this.dataService.venue().pipe(first(), switchMap(venue => {
       const params = new HttpParams()
@@ -70,21 +80,21 @@ export class CartService {
     return result;
   }
 
-  private addToLocalCache(product: Product, item: ProductItem) {
-    const cartItem = this.calcCartItem(product, item);
+  private addToLocalCache(product: Product, productItem: ProductItem) {
+    const cartItem = this.calcCartItem(product, productItem);
+
     cartItem.count++;
-    this.items$.next(Array.from(this.idToItem.values()));
+    this.items$.next(this.items);
   }
 
-  private calcCartItem(product: Product, item: ProductItem) {
-    const itemId = product.id + "|" + item.portion;
-    const existing = this.idToItem.get(itemId);
+  private calcCartItem(product: Product, productItem: ProductItem) {
+    const existing = this.items.find(cartItem => cartItem.productId == product.id && cartItem.portionId == productItem.portion)
     if(existing) {
       return existing;
     }
 
-    const result = CartItem.fromObjects(product, item);
-    this.idToItem.set(itemId, result);
+    const result = CartItem.fromObjects(product, productItem);
+    this.items.push(result);
     return result;
   }
 }

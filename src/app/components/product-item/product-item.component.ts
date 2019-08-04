@@ -32,7 +32,7 @@ export class ProductItemComponent implements OnInit {
 
   @HostListener('click')
   addToCart() {
-    this.cartService.add(this.product, this.item);
+    this.cartService.addItem(this.product, this.item);
   }
 
 }

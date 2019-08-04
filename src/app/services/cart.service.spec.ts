@@ -16,9 +16,8 @@ class MockDataService {
 }
 
 class MockHttpClient {
-  put() {
-    return of(1);
-  }
+  put() { return of(1); }
+  get() { return of([]) }
 }
 
 describe('CartService', () => {
@@ -34,15 +33,15 @@ describe('CartService', () => {
 
   it('should increase count as new items are added', () => {
     const service = TestBed.get(CartService) as CartService;
-    const count$ = service.count();
+    const count$ = service.getCount();
 
     const product1 = Product.fromJson({ id: "product1", name: { en: "Product1" } });
     const productItem1 = ProductItem.fromJson({ portion: "portion1", name: { en: "Portion1" }, price: { "HUF": 1500, "EUR": 5 } });
 
-    service.add(product1, productItem1);
+    service.addItem(product1, productItem1);
     count$.pipe(first()).subscribe(count => expect(count).toBe(1));
 
-    service.add(product1, productItem1);
+    service.addItem(product1, productItem1);
     count$.pipe(first()).subscribe(count => expect(count).toBe(2));
   });
 
@@ -53,21 +52,21 @@ describe('CartService', () => {
     const productItem1 = ProductItem.fromJson({ portion: "portion1", name: { en: "Portion1" }, price: { "HUF": 1500, "EUR": 5 } });
 
     spyOn(httpClient, "put");
-    service.add(product1, productItem1);
+    service.addItem(product1, productItem1);
     expect(httpClient.put).toHaveBeenCalled();
   });
 
   it('should sum per preferred currency', () => {
     const service = TestBed.get(CartService) as CartService;
     const i18nService = TestBed.get(I18nService)as I18nService;
-    const price$ = service.price();
+    const price$ = service.getPrice();
 
     const product1 = Product.fromJson({ id: "product1", name: { en: "Product1" } });
     const productItem11 = ProductItem.fromJson({ portion: "portion1", name: { en: "Portion1" }, price: { "HUF": 1500, "EUR": 5 } });
     const productItem12 = ProductItem.fromJson({ portion: "portion2", name: { en: "Portion2" }, price: { "HUF": 3000, "EUR": 10 } });
 
-    service.add(product1, productItem11);
-    service.add(product1, productItem12);
+    service.addItem(product1, productItem11);
+    service.addItem(product1, productItem12);
 
     i18nService.setLanguage("en");
 
@@ -83,14 +82,14 @@ describe('CartService', () => {
   it('should include multiple currencies when the preferred one is not available for an item', () => {
     const service = TestBed.get(CartService) as CartService;
     const i18nService = TestBed.get(I18nService) as I18nService;
-    const price$ = service.price();
+    const price$ = service.getPrice();
 
     const product1 = Product.fromJson({ id: "product1", name: { en: "Product1" } });
     const productItem11 = ProductItem.fromJson({ portion: "portion1", name: { en: "Portion1" }, price: { "EUR": 5 } });
     const productItem12 = ProductItem.fromJson({ portion: "portion2", name: { en: "Portion2" }, price: { "HUF": 3000 } });
 
-    service.add(product1, productItem11);
-    service.add(product1, productItem12);
+    service.addItem(product1, productItem11);
+    service.addItem(product1, productItem12);
 
     i18nService.setLanguage("en");
 

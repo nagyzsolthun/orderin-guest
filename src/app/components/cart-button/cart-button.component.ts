@@ -19,8 +19,8 @@ export class CartButtonComponent implements OnInit {
 
   ngOnInit() {
     const tableId$ = this.routeParamsService.tableId();
-    const count$ = this.cartService.count();
-    const price$ = this.cartService.price().pipe(map(price =>
+    const count$ = this.cartService.getCount();
+    const price$ = this.cartService.getPrice().pipe(map(price =>
       Array.from(price.keys())
       .map(currency => price.get(currency) + " " + currency)
       .join(" + ")

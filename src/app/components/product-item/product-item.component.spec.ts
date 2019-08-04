@@ -20,7 +20,7 @@ class MockI18nService {
 }
 
 class MockCartService {
-  add(product: Product, item: ProductItem) { }
+  addItem(product: Product, item: ProductItem) { }
 }
 
 describe('ProductItemComponent', () => {
@@ -53,13 +53,13 @@ describe('ProductItemComponent', () => {
 
   it('should add item to cart when clicked', () => {
     const cartService = TestBed.get(CartService);
-    spyOn(cartService, 'add');
+    spyOn(cartService, 'addItem');
 
     component.product = Product.fromJson({ name: { hu: "Termék", en: "Product" } });
     component.item = ProductItem.fromJson({ name: { hu: "Tétel", en: "Item" }, price: { HUF: 490, EUR: 2 } });
     fixture.detectChanges();
     
     compiled.click();
-    expect(cartService.add).toHaveBeenCalledWith(component.product, component.item);
+    expect(cartService.addItem).toHaveBeenCalledWith(component.product, component.item);
   });
 });
