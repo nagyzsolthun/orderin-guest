@@ -1,0 +1,4 @@
+<div *ngIf="price$ | async as price" (click)=sendOrder()>
+  <span class="name">Order</span>
+  <span class="price">{{price}}</span>
+</div>

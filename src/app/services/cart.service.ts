@@ -62,6 +62,10 @@ export class CartService {
     })).subscribe(_ => this.addToLocalCache(product,item)); // TODO loading + error handling
   }
 
+  sendOrder() {
+    console.log("order sent")
+  }
+
   private calcLocalPrice(item: CartItem): Observable<LocalPrice> {
     const currency = this.i18nService.localCurrency(item.price);
     const amount = this.i18nService.localAmount(item.price).pipe(map(amount => amount * item.count));
