@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import Category from 'src/app/domain/Category';
 import { DataService } from 'src/app/services/data.service';
+import Product from 'src/app/domain/Product';
 
 class MockRoute {
   params = new BehaviorSubject<any>({tableId: "tableId"});
@@ -14,9 +15,9 @@ class MockRouter {
 }
 class MockDataService {
   rootCategories$ = new ReplaySubject<Category[]>(1);
-  rootCategories(): Observable<Category[]> {
-    return this.rootCategories$;
-  }
+  products$ = new ReplaySubject<Product[]>(1);
+  rootCategories(): Observable<Category[]> { return this.rootCategories$; }
+  productsOf(): Observable<Product[]> { return this.products$; }
 }
 
 describe('WelcomeComponent', () => {
@@ -52,7 +53,9 @@ describe('WelcomeComponent', () => {
     const navigation = spyOn(router, 'navigate');
 
     const category = Category.fromJson({name: {en:"category"}});
+    const product = Product.fromJson({name: {en:"product"}});
     dataService.rootCategories$.next([category]);
+    dataService.products$.next([product]);
     fixture.detectChanges();
     
     const commands = navigation.calls.first().args[0];

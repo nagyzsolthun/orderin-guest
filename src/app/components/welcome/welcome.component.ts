@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { DataService } from 'src/app/services/data.service';
 import { I18nService } from 'src/app/services/i18n.service';
 
@@ -21,12 +21,19 @@ export class WelcomeComponent implements OnInit,OnDestroy {
 
   ngOnInit() {
     const tableId$ = this.route.params.pipe(map(params => params.tableId));
-    const rootCategories$ = this.dataService.rootCategories();
-    this.subscription = combineLatest(tableId$, rootCategories$).subscribe( ([tableId,rootCategories]) => {
-      const firstCategory = rootCategories[0];
-      const firstCategoryName = I18nService.toEnglish(firstCategory.name);
-      this.router.navigate([tableId, "products", firstCategoryName]);
-    });
+
+    const firstCategoryEnglishName$ = this.dataService.rootCategories().pipe(
+      map(categories => categories[0].name),
+      map(I18nService.toEnglish));
+    
+    const firstCategoryProducts$ = firstCategoryEnglishName$.pipe(
+      switchMap(firstCategoryName => this.dataService.productsOf(firstCategoryName))
+    );
+    
+    this.subscription = combineLatest(tableId$, firstCategoryEnglishName$, firstCategoryProducts$)
+      .subscribe( ([tableId,firstCategoryName, products]) => { // wait for products so no loading animation in category
+        this.router.navigate([tableId, "products", firstCategoryName]);
+      });
   }
 
   ngOnDestroy() {
