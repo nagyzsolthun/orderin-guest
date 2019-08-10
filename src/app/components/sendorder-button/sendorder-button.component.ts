@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CartService } from 'src/app/services/cart.service';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-sendorder-button',
@@ -12,7 +13,7 @@ export class SendOrderButtonComponent implements OnInit {
 
   price$: Observable<string>;
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private orderService: OrderService) { }
 
   ngOnInit() {
     this.price$ = this.cartService.getPrice().pipe(map(price =>
@@ -23,7 +24,7 @@ export class SendOrderButtonComponent implements OnInit {
   }
 
   sendOrder() {
-    this.cartService.sendOrder();
+    this.orderService.sendOrder();
   }
 
 }

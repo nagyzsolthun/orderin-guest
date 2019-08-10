@@ -3,24 +3,31 @@ import { SendOrderButtonComponent } from './sendorder-button.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { of } from 'rxjs';
+import { OrderService } from 'src/app/services/order.service';
+import Order from 'src/app/domain/Order';
 
 class MockCartService {
   getPrice() { return of(new Map([["EUR", 3], ["HUF", 1000]])); }
-  sendOrder() { }
 }
 
-describe('CartButtonComponent', () => {
+class MockOrderService {
+  sendOrder() {}
+}
+
+describe('SendOrderButtonComponent', () => {
   let component: SendOrderButtonComponent;
   let fixture: ComponentFixture<SendOrderButtonComponent>;
   let compiled: HTMLElement;
 
   let cartService: MockCartService;
+  let orderService: MockOrderService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SendOrderButtonComponent ],
       providers: [
         { provide: CartService, useClass: MockCartService },
+        { provide: OrderService, useClass: MockOrderService },
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })
@@ -29,6 +36,7 @@ describe('CartButtonComponent', () => {
 
   beforeEach(() => {
     cartService = TestBed.get(CartService);
+    orderService = TestBed.get(OrderService);
 
     fixture = TestBed.createComponent(SendOrderButtonComponent);
     component = fixture.componentInstance;
@@ -42,9 +50,9 @@ describe('CartButtonComponent', () => {
   });
 
   it('sends order when clicked', () => {
-    spyOn(cartService, "sendOrder");
+    spyOn(orderService, "sendOrder");
     component.sendOrder();  // TODO should be through click
     fixture.detectChanges();
-    expect(cartService.sendOrder).toHaveBeenCalled();
+    expect(orderService.sendOrder).toHaveBeenCalled();
   });
 });

@@ -64,12 +64,9 @@ export class CartService {
     })).subscribe(_ => this.addToLocalCache(product,item)); // TODO loading + error handling
   }
 
-  sendOrder() {
-    const url = `${environment.apiUrl}/sendOrder`;
-    this.routeParamsService.tableId().pipe(first(), switchMap(tableId => {
-      const params = new HttpParams().set("tableId", tableId);
-      return this.http.put(url, {}, {params});
-    })).subscribe(_ => this.clearCart());
+  clear() {
+    this.items.length = 0;
+    this.items$.next(this.items);
   }
 
   private calcLocalPrice(item: OrderItem): Observable<LocalPrice> {
@@ -106,11 +103,6 @@ export class CartService {
     const result = OrderItem.fromObjects(product, productItem);
     this.items.push(result);
     return result;
-  }
-
-  private clearCart() {
-    this.items.length = 0;
-    this.items$.next(this.items);
   }
 
 }
