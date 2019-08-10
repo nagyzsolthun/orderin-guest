@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import CartItem from 'src/app/domain/CartItem';
+import OrderItem from 'src/app/domain/OrderItem';
 import { I18nService } from 'src/app/services/i18n.service';
 import { CartItemComponent } from './cart-item.component';
 
@@ -26,11 +26,11 @@ describe('CartItemComponent', () => {
   }));
 
   beforeEach(() => {
-    const cartItem = CartItem.fromJson({productId:"productId", portionId:"portionId", productName:{en:"Product"}, portionName:{en:"Portion"}, price: {HUF:1000}, count: 1});
+    const orderItem = OrderItem.fromJson({productId:"productId", portionId:"portionId", productName:{en:"Product"}, portionName:{en:"Portion"}, price: {HUF:1000}, count: 1});
 
     fixture = TestBed.createComponent(CartItemComponent);
     component = fixture.componentInstance;
-    component.item = cartItem;
+    component.item = orderItem;
     fixture.detectChanges();
   });
 

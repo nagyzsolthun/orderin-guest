@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, Observable, of, ReplaySubject } from 'rxjs';
 import { map, switchMap, first, shareReplay, tap } from 'rxjs/operators';
-import CartItem from '../domain/CartItem';
+import OrderItem from '../domain/OrderItem';
 import ProductItem from '../domain/ProductItem';
 import Product from '../domain/Product';
 import { I18nService } from './i18n.service';
@@ -15,8 +15,8 @@ import { RouteParamsService } from './route-params.service';
 })
 export class CartService {
 
-  private items = new Array<CartItem>();
-  private items$ = new ReplaySubject<CartItem[]>(1);
+  private items = new Array<OrderItem>();
+  private items$ = new ReplaySubject<OrderItem[]>(1);
 
   constructor(
     private routeParamsService: RouteParamsService,
@@ -29,7 +29,7 @@ export class CartService {
         switchMap(cartUrl => http.get(cartUrl))
       ).subscribe(cart => {
         const cartItems = cart as [];
-        this.items = cartItems.map(CartItem.fromJson);
+        this.items = cartItems.map(OrderItem.fromJson);
         this.items$.next(this.items);
       });
     }
@@ -49,7 +49,7 @@ export class CartService {
     );
   }
 
-  getItems(): Observable<CartItem[]> {
+  getItems(): Observable<OrderItem[]> {
     return this.items$;
   }
 
@@ -72,7 +72,7 @@ export class CartService {
     })).subscribe(_ => this.clearCart());
   }
 
-  private calcLocalPrice(item: CartItem): Observable<LocalPrice> {
+  private calcLocalPrice(item: OrderItem): Observable<LocalPrice> {
     const currency = this.i18nService.localCurrency(item.price);
     const amount = this.i18nService.localAmount(item.price).pipe(map(amount => amount * item.count));
     return combineLatest(currency, amount)
@@ -103,7 +103,7 @@ export class CartService {
       return existing;
     }
 
-    const result = CartItem.fromObjects(product, productItem);
+    const result = OrderItem.fromObjects(product, productItem);
     this.items.push(result);
     return result;
   }

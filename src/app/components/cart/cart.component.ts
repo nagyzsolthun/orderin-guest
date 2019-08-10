@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription, combineLatest } from 'rxjs';
-import CartItem from 'src/app/domain/CartItem';
+import OrderItem from 'src/app/domain/OrderItem';
 import { CartService } from 'src/app/services/cart.service';
 import { filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { RouteParamsService } from 'src/app/services/route-params.service';
 })
 export class CartComponent implements OnInit,OnDestroy {
 
-  items$: Observable<CartItem[]>;
+  items$: Observable<OrderItem[]>;
   private redirectSubscription: Subscription;
 
   constructor(

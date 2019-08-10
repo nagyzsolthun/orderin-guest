@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import CartItem from 'src/app/domain/CartItem';
+import OrderItem from 'src/app/domain/OrderItem';
 import { I18nService } from 'src/app/services/i18n.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { I18nService } from 'src/app/services/i18n.service';
 })
 export class CartItemComponent implements OnInit {
 
-  @Input() item: CartItem;
+  @Input() item: OrderItem;
 
   productName$: Observable<string>;
   portionName$: Observable<string>;

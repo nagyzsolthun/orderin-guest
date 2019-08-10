@@ -1,7 +1,7 @@
 import Product from "./Product";
 import ProductItem from "./ProductItem";
 
-export default class CartItem {
+export default class OrderItem {
     productId: string;
     portionId: string;
     productName: Map<string,string>;
@@ -9,8 +9,8 @@ export default class CartItem {
     price: Map<string,number>;
     count: number;
 
-    static fromObjects(product: Product, productItem: ProductItem): CartItem {
-        const result = new CartItem();
+    static fromObjects(product: Product, productItem: ProductItem): OrderItem {
+        const result = new OrderItem();
         result.productId = product.id;
         result.portionId = productItem.portion;
         result.productName = product.name
@@ -20,8 +20,8 @@ export default class CartItem {
         return result;
     }
 
-    static fromJson(json: any): CartItem {
-        const result = new CartItem();
+    static fromJson(json: any): OrderItem {
+        const result = new OrderItem();
         result.productId = json.productId;
         result.portionId = json.portionId;
         result.productName = new Map(Object.entries(json.productName));

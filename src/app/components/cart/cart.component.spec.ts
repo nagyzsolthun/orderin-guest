@@ -2,13 +2,13 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { CartComponent } from './cart.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of, ReplaySubject } from 'rxjs';
-import CartItem from 'src/app/domain/CartItem';
+import OrderItem from 'src/app/domain/OrderItem';
 import { RouteParamsService } from 'src/app/services/route-params.service';
 import { CartService } from 'src/app/services/cart.service';
 import { Router } from '@angular/router';
 
 class MockCartService {
-  items$ = new ReplaySubject<CartItem[]>(1);
+  items$ = new ReplaySubject<OrderItem[]>(1);
   getItems() { return this.items$; }
 }
 
@@ -52,7 +52,7 @@ describe('CartComponent', () => {
   });
 
   it('should show items', () => {
-    const item1 = CartItem.fromJson({
+    const item1 = OrderItem.fromJson({
       productId: "productId1",
       portionId: "portionId1",
       productName: {en: "product1"},
@@ -61,7 +61,7 @@ describe('CartComponent', () => {
       count: 1
     });
 
-    const item2 = CartItem.fromJson({
+    const item2 = OrderItem.fromJson({
       productId: "productId2",
       portionId: "portionId2",
       productName: {en: "product2"},
