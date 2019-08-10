@@ -8,6 +8,7 @@ import { I18nService } from './i18n.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { DataService } from './data.service';
+import { RouteParamsService } from './route-params.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class CartService {
   private items$ = new ReplaySubject<CartItem[]>(1);
 
   constructor(
+    private routeParamsService: RouteParamsService,
     private dataService: DataService,
     private i18nService: I18nService,
     private http: HttpClient) {
@@ -63,7 +65,11 @@ export class CartService {
   }
 
   sendOrder() {
-    console.log("order sent")
+    const url = `${environment.apiUrl}/sendOrder`;
+    this.routeParamsService.tableId().pipe(first(), switchMap(tableId => {
+      const params = new HttpParams().set("tableId", tableId);
+      return this.http.put(url, {}, {params});
+    })).subscribe(_ => this.clearCart());
   }
 
   private calcLocalPrice(item: CartItem): Observable<LocalPrice> {
@@ -101,6 +107,12 @@ export class CartService {
     this.items.push(result);
     return result;
   }
+
+  private clearCart() {
+    this.items.length = 0;
+    this.items$.next(this.items);
+  }
+
 }
 
 class LocalPrice {

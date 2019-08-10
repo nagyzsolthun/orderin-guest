@@ -8,6 +8,13 @@ import { of } from 'rxjs';
 import Venue from '../domain/Venue';
 import { DataService } from './data.service';
 import { HttpClient } from '@angular/common/http';
+import { RouteParamsService } from './route-params.service';
+
+class MockRouteParamsService {
+  tableid() {
+    return of("tableId");
+  }
+}
 
 class MockDataService {
   venue() {
@@ -25,6 +32,7 @@ describe('CartService', () => {
     TestBed.configureTestingModule({
       providers: [
         CartService,
+        { provide: RouteParamsService, useClass: MockRouteParamsService },
         { provide: DataService, useClass: MockDataService },
         { provide: HttpClient, useClass: MockHttpClient }
       ]
