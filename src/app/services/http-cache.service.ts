@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
@@ -12,7 +12,8 @@ export class HttpCacheService {
 
   constructor(private http: HttpClient) { }
 
-  get(url: string): Observable<any> {
+  get(baseUrl: string, params?: any): Observable<any> {
+    const url = HttpCacheService.generateUrl(baseUrl, params);
     const cached = this.cache.get(url);
     if(cached) {
       return cached;
@@ -21,5 +22,15 @@ export class HttpCacheService {
     const result = this.http.get(url).pipe(shareReplay(1));
     this.cache.set(url, result)
     return result;
+  }
+
+  private static generateUrl(url: string, params:any) {
+    if(!params) {
+      return url;
+    }
+    
+    return url + "?" + Object.keys(params)
+      .map(param => `${param}=${encodeURIComponent(params[param])}`)
+      .join("&");
   }
 }

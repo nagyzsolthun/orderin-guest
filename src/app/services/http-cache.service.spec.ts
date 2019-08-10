@@ -31,4 +31,13 @@ describe('HttpCacheService', () => {
     expect(getSpy.calls.count()).toBe(1);  // still 1
   });
 
+  it('appends params as queryParams', () => {
+    const service = TestBed.get(HttpCacheService);
+    const httpClient = TestBed.get(HttpClient);
+    const getSpy = spyOn(httpClient, "get").and.callThrough();
+
+    service.get("url", {param1:"param1", param2:"param2"});
+    expect(getSpy).toHaveBeenCalledWith("url?param1=param1&param2=param2")
+  });
+
 });

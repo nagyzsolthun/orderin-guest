@@ -2,3 +2,6 @@
 <app-navbar></app-navbar>
 <router-outlet></router-outlet>
 <app-cart-button></app-cart-button>
+<ng-container *ngIf="orders$ | async as orders">
+    <app-order-button *ngFor="let order of orders" [order]=order></app-order-button>
+</ng-container>

@@ -1,0 +1,12 @@
+:host {
+    margin-top: auto;
+    font-size: 1.2em;
+    padding: 0.5em;
+    text-align: center;
+    text-decoration: none;
+    background-color: rgba(70,70,70,0.4);
+    border-top: .05em solid #444;
+    cursor: pointer;
+}
+
+.counter { color: #fff; }
