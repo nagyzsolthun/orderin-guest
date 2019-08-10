@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { OrderButtonComponent } from './order-button.component';
+import { SendOrderButtonComponent } from './sendorder-button.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { of } from 'rxjs';
@@ -10,15 +10,15 @@ class MockCartService {
 }
 
 describe('CartButtonComponent', () => {
-  let component: OrderButtonComponent;
-  let fixture: ComponentFixture<OrderButtonComponent>;
+  let component: SendOrderButtonComponent;
+  let fixture: ComponentFixture<SendOrderButtonComponent>;
   let compiled: HTMLElement;
 
   let cartService: MockCartService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrderButtonComponent ],
+      declarations: [ SendOrderButtonComponent ],
       providers: [
         { provide: CartService, useClass: MockCartService },
       ],
@@ -30,7 +30,7 @@ describe('CartButtonComponent', () => {
   beforeEach(() => {
     cartService = TestBed.get(CartService);
 
-    fixture = TestBed.createComponent(OrderButtonComponent);
+    fixture = TestBed.createComponent(SendOrderButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
     compiled = fixture.debugElement.nativeElement;

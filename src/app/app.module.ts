@@ -15,7 +15,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { DataService } from './services/data.service';
 import { CartComponent } from './components/cart/cart.component';
 import { CartItemComponent } from './components/cart-item/cart-item.component';
-import { OrderButtonComponent } from './components/order-button/order-button.component';
+import { SendOrderButtonComponent } from './components/sendorder-button/sendorder-button.component';
 
 
 // TODO uuid matching https://gist.github.com/anein/fba647b4206695d109c30e1fc0d2e8ee
@@ -40,7 +40,7 @@ const routes: Routes = [
     CartButtonComponent,
     CartComponent,
     CartItemComponent,
-    OrderButtonComponent
+    SendOrderButtonComponent
   ],
   imports: [
     BrowserModule,

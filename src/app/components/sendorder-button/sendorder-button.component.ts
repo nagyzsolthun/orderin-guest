@@ -4,11 +4,11 @@ import { map } from 'rxjs/operators';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
-  selector: 'app-order-button',
-  templateUrl: './order-button.component.html',
-  styleUrls: ['./order-button.component.css']
+  selector: 'app-sendorder-button',
+  templateUrl: './sendorder-button.component.html',
+  styleUrls: ['./sendorder-button.component.css']
 })
-export class OrderButtonComponent implements OnInit {
+export class SendOrderButtonComponent implements OnInit {
 
   price$: Observable<string>;
 
