@@ -1,5 +1,5 @@
 {
-  "name": "orderin-guest",
+  "name": "orderin-ui-guest",
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
