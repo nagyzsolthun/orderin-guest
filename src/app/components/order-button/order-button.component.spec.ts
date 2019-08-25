@@ -16,12 +16,12 @@ describe('OrderButtonComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(OrderButtonComponent);
-    fixture.componentInstance.order = Order.fromJson({id: "id1", counter: 1, orderItems: []});
+    fixture.componentInstance.order = Order.fromJson({id: "id1", counter: "001", orderItems: []});
     fixture.detectChanges();
     compiled = fixture.debugElement.nativeElement;
   });
 
-  it('should show 3 digits order counter', () => {
+  it('should show counter', () => {
     const counter = compiled.querySelector(".counter").innerHTML;
     expect(counter).toBe("001");
   });
