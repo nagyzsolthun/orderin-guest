@@ -1,1 +1,4 @@
-<span class="counter">{{order.counter}}</span>
+<a *ngIf="tableId$ | async as tableId" [routerLink]="[ '/', tableId, 'order', order.counter ]" [class]="order.state | lowercase">
+    <div class="counter">{{order.counter}}</div>
+    <div class="state">{{order.state}}</div>
+</a>

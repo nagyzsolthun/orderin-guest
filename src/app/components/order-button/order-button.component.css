@@ -1,12 +1,26 @@
-:host {
+a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: auto;
     font-size: 1.2em;
     padding: 0.5em;
     text-align: center;
+    background-color: rgba(20,20,50, 0.2);
+    border-top: .05em solid #555;
     text-decoration: none;
-    background-color: rgba(70,70,70,0.4);
-    border-top: .05em solid #444;
-    cursor: pointer;
 }
 
 .counter { color: #fff; }
+
+.state {
+    margin-left: .5em;
+    font-size: .9em;
+    text-transform: lowercase;
+}
+
+.created .state { color: #fff; }
+.preparing .state { color: #ff4; }
+.ready .state { color: #4f4; }
+.taken .state { color: #844; }
+.deleted .state { color: #444; }

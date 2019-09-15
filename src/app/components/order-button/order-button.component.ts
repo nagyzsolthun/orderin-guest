@@ -1,21 +1,22 @@
-import { Component, Input, HostListener } from '@angular/core';
+import { Component, Input, HostListener, OnInit } from '@angular/core';
 import Order from 'src/app/domain/Order';
+import { Observable } from 'rxjs';
+import { RouteParamsService } from 'src/app/services/route-params.service';
 
 @Component({
   selector: 'app-order-button',
   templateUrl: './order-button.component.html',
   styleUrls: ['./order-button.component.css']
 })
-export class OrderButtonComponent {
+export class OrderButtonComponent implements OnInit {
 
   @Input() order: Order;
+  tableId$: Observable<string>;
 
-  constructor() { }
+  constructor(private routeParamsService: RouteParamsService) { }
 
-  @HostListener("click")
-  openOrder() {
-    console.log("order clicked", this.order.counter);
-    // TODO navigate
+  ngOnInit() {
+    this.tableId$ = this.routeParamsService.tableId();
   }
 
 }
